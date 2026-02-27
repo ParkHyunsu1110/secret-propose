@@ -43,6 +43,7 @@ frontend/                # Vue 3 + Vite (SPA)
 ├── src/
 │   ├── views/           # 페이지 컴포넌트
 │   ├── components/      # 공통 컴포넌트
+│   ├── composables/     # 공유 상태 (useMusic 등)
 │   ├── router/          # Vue Router
 │   └── data/            # 데이터 파일
 └── public/              # 정적 리소스 (이미지, 음악)
@@ -82,6 +83,10 @@ frontend/                # Vue 3 + Vite (SPA)
 | Vite 빌드 → Spring Boot static 연동 설정 | ✅ 완료 (설정만) |
 | "네" 버튼 클릭 → 축하 페이지 (CelebrationView) | ✅ 완료 |
 | Vercel 배포 설정 (vercel.json + build:vercel) | ✅ 완료 |
+| 배경 음악 전역화 (페이지 전환 시 끊김 방지) | ✅ 완료 |
+| 카드 뉴스 스와이프 제스처 (모바일 좌우 스와이프) | ✅ 완료 |
+| OG 메타 태그 + Favicon (링크 공유 미리보기) | ✅ 완료 |
+| 404 리다이렉트 (잘못된 경로 → 카드 뉴스) | ✅ 완료 |
 
 ### feature/server - 백엔드 (Kotlin + Spring Boot)
 

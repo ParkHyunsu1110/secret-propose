@@ -1,6 +1,10 @@
 <template>
   <div class="card-news">
-    <div class="card-news-container">
+    <div
+      class="card-news-container"
+      @touchstart="onTouchStart"
+      @touchend="onTouchEnd"
+    >
       <transition :name="transitionName" mode="out-in">
         <CardFrame :key="currentIndex" :memory="currentMemory" />
       </transition>
@@ -72,6 +76,25 @@ function prev() {
 
 function goToEvent() {
   router.push('/event')
+}
+
+const SWIPE_THRESHOLD = 50
+let touchStartX = 0
+
+function onTouchStart(e) {
+  touchStartX = e.touches[0].clientX
+}
+
+function onTouchEnd(e) {
+  const diff = touchStartX - e.changedTouches[0].clientX
+  if (Math.abs(diff) < SWIPE_THRESHOLD) return
+
+  if (diff > 0) {
+    if (isLast.value) goToEvent()
+    else next()
+  } else {
+    prev()
+  }
 }
 </script>
 

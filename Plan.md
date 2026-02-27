@@ -109,4 +109,8 @@ frontend/                    # Vue 프로젝트 루트
 - [ ] 편지 실제 내용 교체
 - [ ] 배경 음악 파일 추가 (`public/music/bgm.mp3`)
 - [ ] 추억 이미지 파일 추가 (`public/images/`)
+- [x] 배경 음악 전역화 (composable로 페이지 전환 시 끊김 방지)
+- [x] 카드 뉴스 모바일 스와이프 제스처
+- [x] OG 메타 태그 + Favicon + theme-color
+- [x] 404 리다이렉트 라우트
 - [ ] 디자인/UX 디테일 보완 (애니메이션, 색상, 폰트 등)

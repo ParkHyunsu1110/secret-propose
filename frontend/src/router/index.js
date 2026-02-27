@@ -19,6 +19,10 @@ const routes = [
     name: 'Celebration',
     component: CelebrationView,
   },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/',
+  },
 ]
 
 const router = createRouter({

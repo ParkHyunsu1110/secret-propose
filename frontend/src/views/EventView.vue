@@ -1,7 +1,5 @@
 <template>
   <div class="event-page">
-    <audio ref="audioRef" loop :src="musicSrc" />
-
     <div v-if="!musicStarted" class="music-overlay" @click="startMusic">
       <div class="music-prompt">
         <span class="music-icon">♪</span>
@@ -36,19 +34,15 @@ import { ref, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import LetterContent from '@/components/LetterContent.vue'
 import RunawayButton from '@/components/RunawayButton.vue'
+import { useMusic } from '@/composables/useMusic.js'
 
 const router = useRouter()
-const audioRef = ref(null)
+const { play } = useMusic()
 const musicStarted = ref(false)
 const showLetter = ref(false)
-const musicSrc = '/music/bgm.mp3'
 
 async function startMusic() {
-  try {
-    await audioRef.value?.play()
-  } catch {
-    /* autoplay blocked - continue without music */
-  }
+  await play()
   musicStarted.value = true
   await nextTick()
   setTimeout(() => {
