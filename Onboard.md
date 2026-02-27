@@ -14,6 +14,32 @@
 - **main**: 프로젝트 동작을 위한 최소한의 코드만 유지
 - **develop**: 실제 개발 작업 진행 브랜치
 
+### 프로젝트 구조
+
+```
+src/main/kotlin/com/secret/propse/
+├── Application.kt
+├── common/           # ApiResponse, BaseController, ResultCode
+├── config/
+├── controller/
+├── dto/
+├── entity/
+├── exception/        # BusinessException, GlobalExceptionHandler
+├── repository/
+└── service/
+```
+
+### 서버 실행
+- **명령어**: `./gradlew bootRun`
+- **포트**: 8080 (기본)
+- **확인 URL**: `http://localhost:8080/` (index.html), `http://localhost:8080/api/test`, `http://localhost:8080/h2-console`
+
+### 초기 구성 (main 브랜치)
+- TestController: `GET /api/test` API
+- index.html: 루트 welcome 페이지
+- .gitignore: Gradle, IDE, 빌드 산출물 제외
+- GitConvention.md: 커밋 메시지 규칙
+
 ---
 
 ## 개발 규칙
