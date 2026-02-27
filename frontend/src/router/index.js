@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CardNewsView from '@/views/CardNewsView.vue'
 import EventView from '@/views/EventView.vue'
+import CelebrationView from '@/views/CelebrationView.vue'
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: '/event',
     name: 'Event',
     component: EventView,
+  },
+  {
+    path: '/celebration',
+    name: 'Celebration',
+    component: CelebrationView,
   },
 ]
 

@@ -28,25 +28,19 @@
       </transition>
     </div>
 
-    <div v-if="accepted" class="celebration-overlay">
-      <div class="celebration-content">
-        <span class="heart-icon">❤️</span>
-        <h1>고마워, 사랑해</h1>
-        <p>우리 함께 영원히</p>
-      </div>
-    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, nextTick } from 'vue'
+import { useRouter } from 'vue-router'
 import LetterContent from '@/components/LetterContent.vue'
 import RunawayButton from '@/components/RunawayButton.vue'
 
+const router = useRouter()
 const audioRef = ref(null)
 const musicStarted = ref(false)
 const showLetter = ref(false)
-const accepted = ref(false)
 const musicSrc = '/music/bgm.mp3'
 
 async function startMusic() {
@@ -63,7 +57,7 @@ async function startMusic() {
 }
 
 function onYes() {
-  accepted.value = true
+  router.push('/celebration')
 }
 </script>
 
@@ -157,58 +151,6 @@ function onYes() {
   transform: translateY(-1px);
 }
 
-.celebration-overlay {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(135deg, #1a0a14 0%, #2d1225 50%, #1a0a14 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 200;
-  animation: fadeIn 1s ease;
-}
-
-.celebration-content {
-  text-align: center;
-  color: #fff;
-  animation: scaleIn 0.8s ease 0.3s both;
-}
-
-.heart-icon {
-  font-size: 5rem;
-  display: block;
-  margin-bottom: 1.5rem;
-  animation: heartbeat 1.2s ease-in-out infinite;
-}
-
-.celebration-content h1 {
-  font-size: 2rem;
-  margin: 0 0 0.5rem 0;
-}
-
-.celebration-content p {
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.8); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes heartbeat {
-  0%, 100% { transform: scale(1); }
-  15% { transform: scale(1.15); }
-  30% { transform: scale(1); }
-  45% { transform: scale(1.1); }
-}
-
 /* fade-up transition */
 .fade-up-enter-active {
   transition: all 0.8s ease;
@@ -229,10 +171,6 @@ function onYes() {
 
   .music-prompt p {
     font-size: 1rem;
-  }
-
-  .celebration-content h1 {
-    font-size: 1.6rem;
   }
 }
 </style>

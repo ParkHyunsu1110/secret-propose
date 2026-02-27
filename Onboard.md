@@ -53,7 +53,7 @@ frontend/                # Vue 3 + Vite (SPA)
 ### 프론트엔드 실행
 - **명령어**: `cd frontend && npm run dev`
 - **포트**: 5173 (기본)
-- **확인 URL**: `http://localhost:5173/` (카드 뉴스), `http://localhost:5173/event` (이벤트)
+- **확인 URL**: `http://localhost:5173/` (카드 뉴스), `http://localhost:5173/event` (이벤트), `http://localhost:5173/celebration` (축하)
 - **모바일 확인**: `host: true` 설정으로 같은 Wi-Fi 내 모바일 접속 가능
 
 ### 초기 구성 (main 브랜치)
@@ -77,6 +77,7 @@ frontend/                # Vue 3 + Vite (SPA)
 | "아니요" 버튼 도망 로직 (PC 호버 + 모바일 터치) | ✅ 완료 |
 | 반응형 디자인 (모바일 대응) | ✅ 완료 |
 | Vite 빌드 → Spring Boot static 연동 설정 | ✅ 완료 (설정만) |
+| "네" 버튼 클릭 → 축하 페이지 (CelebrationView) | ✅ 완료 |
 
 ### feature/server - 백엔드 (Kotlin + Spring Boot)
 
