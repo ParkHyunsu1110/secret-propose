@@ -3,12 +3,13 @@
 ## 프로젝트 개요
 
 - **성격**: 간단한 토이 프로젝트
-- **스택**: Kotlin + Spring Framework
+- **스택**: Kotlin + Spring Boot / Vue 3 + Vite
 - **영역**: Server, WebApplication 함께 진행
 - **DB**: H2
 
 ### 개발 환경
 - **JDK**: Java 21 (설치 완료)
+- **Node.js**: 프론트엔드 빌드 (Vite + Vue 3)
 
 ### 브랜치 전략 (Git-Flow)
 - **main**: 프로젝트 동작을 위한 최소한의 코드만 유지
@@ -27,6 +28,14 @@ src/main/kotlin/com/secret/propse/
 ├── exception/        # BusinessException, GlobalExceptionHandler
 ├── repository/
 └── service/
+
+frontend/                # Vue 3 + Vite (SPA)
+├── src/
+│   ├── views/           # 페이지 컴포넌트
+│   ├── components/      # 공통 컴포넌트
+│   ├── router/          # Vue Router
+│   └── data/            # 데이터 파일
+└── public/              # 정적 리소스 (이미지, 음악)
 ```
 
 ### 서버 실행
