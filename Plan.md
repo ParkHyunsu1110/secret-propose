@@ -35,6 +35,7 @@
 
 - **Backend**: Kotlin + Spring Boot
 - **Frontend**: Vue 3 + Vite (SPA)
+- **배포**: Vercel (무료 정적 호스팅, GitHub 연동 자동 배포)
 - **DB**: H2 (필요 시)
 - **반응형**: 모바일 친화적 디자인 (Responsive Web)
 
@@ -101,10 +102,10 @@ frontend/                    # Vue 프로젝트 루트
 
 ## 추가 개발 예정
 
+- [ ] Vercel 배포 설정 (GitHub 연동, 자동 배포)
 - [ ] "네" 버튼 클릭 후 화면 (축하 애니메이션? 감사 메시지? 추후 기획)
 - [ ] 카드 뉴스 실제 콘텐츠 교체 (이미지, 날짜, 장소, 회고 글)
 - [ ] 편지 실제 내용 교체
 - [ ] 배경 음악 파일 추가 (`public/music/bgm.mp3`)
 - [ ] 추억 이미지 파일 추가 (`public/images/`)
-- [ ] Vite 빌드 후 Spring Boot 배포 테스트
 - [ ] 디자인/UX 디테일 보완 (애니메이션, 색상, 폰트 등)
