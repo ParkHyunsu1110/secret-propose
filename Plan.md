@@ -35,6 +35,7 @@
 
 - **Backend**: Kotlin + Spring Boot
 - **Frontend**: Vue 3 + Vite (SPA)
+- **배포**: Vercel (무료 정적 호스팅, GitHub 연동 자동 배포)
 - **DB**: H2 (필요 시)
 - **반응형**: 모바일 친화적 디자인 (Responsive Web)
 
@@ -71,7 +72,8 @@ frontend/                    # Vue 프로젝트 루트
     │   └── index.js         # Vue Router 설정
     ├── views/
     │   ├── CardNewsView.vue  # 카드 뉴스 페이지
-    │   └── EventView.vue     # 이벤트(프로포즈) 페이지
+    │   ├── EventView.vue     # 이벤트(프로포즈) 페이지
+    │   └── CelebrationView.vue # 축하 페이지 (파티클 애니메이션)
     ├── components/
     │   ├── CardFrame.vue     # 카드 프레임 컴포넌트
     │   ├── LetterContent.vue # 편지 컴포넌트
@@ -87,21 +89,28 @@ frontend/                    # Vue 프로젝트 루트
 
 ## 구현 순서
 
-1. [ ] Vue 3 + Vite 프로젝트 세팅 (frontend 폴더)
-2. [ ] Vue Router 설정 (카드 뉴스 ↔ 이벤트 페이지)
-3. [ ] 카드 뉴스 페이지 구현 (CardNewsView + CardFrame 컴포넌트)
-4. [ ] 이벤트 페이지 구현 (편지 + 배경 음악)
-5. [ ] "아니요" 버튼 도망 로직 (RunawayButton 컴포넌트, 모바일 터치 대응 포함)
-6. [ ] 반응형 디자인 적용 (모바일 최적화)
-7. [ ] Vite 빌드 → Spring Boot static 연동
-8. [ ] "네" 버튼 클릭 후 동작 (추후 기획)
+1. [x] Vue 3 + Vite 프로젝트 세팅 (frontend 폴더)
+2. [x] Vue Router 설정 (카드 뉴스 ↔ 이벤트 페이지)
+3. [x] 카드 뉴스 페이지 구현 (CardNewsView + CardFrame 컴포넌트)
+4. [x] 이벤트 페이지 구현 (편지 + 배경 음악)
+5. [x] "아니요" 버튼 도망 로직 (RunawayButton 컴포넌트, 모바일 터치 대응 포함)
+6. [x] 반응형 디자인 적용 (모바일 최적화)
+7. [x] Vite 빌드 → Spring Boot static 연동 (설정 완료)
+8. [x] "네" 버튼 클릭 후 동작 → 축하 페이지 (CelebrationView)
 9. [ ] 더미 데이터 → 실제 데이터 교체
 
 ---
 
-## 미정 사항
+## 추가 개발 예정
 
-- "네" 버튼 클릭 후 화면 (축하 애니메이션? 감사 메시지? 추후 결정)
-- 카드 뉴스 실제 콘텐츠 (이미지, 날짜, 장소, 회고 글)
-- 편지 실제 내용
-- 배경 음악 선곡
+- [x] Vercel 배포 설정 (vercel.json, build:vercel 스크립트, SPA 리라이트)
+- [x] "네" 버튼 클릭 후 화면 (Canvas 파티클 애니메이션 + 순차 텍스트 등장)
+- [ ] 카드 뉴스 실제 콘텐츠 교체 (이미지, 날짜, 장소, 회고 글)
+- [ ] 편지 실제 내용 교체
+- [ ] 배경 음악 파일 추가 (`public/music/bgm.mp3`)
+- [ ] 추억 이미지 파일 추가 (`public/images/`)
+- [x] 배경 음악 전역화 (composable로 페이지 전환 시 끊김 방지)
+- [x] 카드 뉴스 모바일 스와이프 제스처
+- [x] OG 메타 태그 + Favicon + theme-color
+- [x] 404 리다이렉트 라우트
+- [ ] 디자인/UX 디테일 보완 (애니메이션, 색상, 폰트 등)

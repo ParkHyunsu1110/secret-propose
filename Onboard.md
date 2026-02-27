@@ -11,9 +11,19 @@
 - **JDK**: Java 21 (설치 완료)
 - **Node.js**: 프론트엔드 빌드 (Vite + Vue 3)
 
+### 배포
+- **플랫폼**: Vercel (무료, 정적 사이트 호스팅)
+- **배포 방식**: GitHub 연동 → push 시 자동 배포
+- **설정 파일**: `vercel.json` (빌드 커맨드, 출력 디렉토리, SPA 리라이트)
+- **빌드 스크립트**: `npm run build:vercel` → `frontend/dist` 출력 (Vercel 전용)
+- **SPA 라우팅**: 모든 경로 → `index.html` 리라이트 (Vue Router history 모드 대응)
+- **접근**: PC / 모바일 / 태블릿 모두 공개 URL로 접근 가능
+
 ### 브랜치 전략 (Git-Flow)
 - **main**: 프로젝트 동작을 위한 최소한의 코드만 유지
 - **develop**: 실제 개발 작업 진행 브랜치
+- **feature/web**: 프론트엔드(Vue) 기능 개발
+- **feature/server**: 백엔드(Spring Boot) 기능 개발
 
 ### 프로젝트 구조
 
@@ -33,6 +43,7 @@ frontend/                # Vue 3 + Vite (SPA)
 ├── src/
 │   ├── views/           # 페이지 컴포넌트
 │   ├── components/      # 공통 컴포넌트
+│   ├── composables/     # 공유 상태 (useMusic 등)
 │   ├── router/          # Vue Router
 │   └── data/            # 데이터 파일
 └── public/              # 정적 리소스 (이미지, 음악)
@@ -43,11 +54,45 @@ frontend/                # Vue 3 + Vite (SPA)
 - **포트**: 8080 (기본)
 - **확인 URL**: `http://localhost:8080/` (index.html), `http://localhost:8080/api/test`, `http://localhost:8080/h2-console`
 
+### 프론트엔드 실행
+- **명령어**: `cd frontend && npm run dev`
+- **포트**: 5173 (기본)
+- **확인 URL**: `http://localhost:5173/` (카드 뉴스), `http://localhost:5173/event` (이벤트), `http://localhost:5173/celebration` (축하)
+- **모바일 확인**: `host: true` 설정으로 같은 Wi-Fi 내 모바일 접속 가능
+
 ### 초기 구성 (main 브랜치)
 - TestController: `GET /api/test` API
 - index.html: 루트 welcome 페이지
 - .gitignore: Gradle, IDE, 빌드 산출물 제외
 - GitConvention.md: 커밋 메시지 규칙
+
+---
+
+## 개발 진행 상황
+
+### feature/web - 프론트엔드 (Vue 3 + Vite)
+
+| 항목 | 상태 |
+| --- | --- |
+| Vue 3 + Vite 프로젝트 세팅 | ✅ 완료 |
+| Vue Router 설정 (`/` → 카드 뉴스, `/event` → 이벤트) | ✅ 완료 |
+| 카드 뉴스 페이지 (CardNewsView + CardFrame) | ✅ 완료 (더미 데이터) |
+| 이벤트 페이지 (편지 + 배경 음악 + 프로포즈) | ✅ 완료 (더미 내용) |
+| "아니요" 버튼 도망 로직 (PC 호버 + 모바일 터치) | ✅ 완료 |
+| 반응형 디자인 (모바일 대응) | ✅ 완료 |
+| Vite 빌드 → Spring Boot static 연동 설정 | ✅ 완료 (설정만) |
+| "네" 버튼 클릭 → 축하 페이지 (CelebrationView) | ✅ 완료 |
+| Vercel 배포 설정 (vercel.json + build:vercel) | ✅ 완료 |
+| 배경 음악 전역화 (페이지 전환 시 끊김 방지) | ✅ 완료 |
+| 카드 뉴스 스와이프 제스처 (모바일 좌우 스와이프) | ✅ 완료 |
+| OG 메타 태그 + Favicon (링크 공유 미리보기) | ✅ 완료 |
+| 404 리다이렉트 (잘못된 경로 → 카드 뉴스) | ✅ 완료 |
+
+### feature/server - 백엔드 (Kotlin + Spring Boot)
+
+| 항목 | 상태 |
+| --- | --- |
+| 추가 개발 없음 | - |
 
 ---
 
