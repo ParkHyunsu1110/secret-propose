@@ -14,6 +14,9 @@
 ### 배포
 - **플랫폼**: Vercel (무료, 정적 사이트 호스팅)
 - **배포 방식**: GitHub 연동 → push 시 자동 배포
+- **설정 파일**: `vercel.json` (빌드 커맨드, 출력 디렉토리, SPA 리라이트)
+- **빌드 스크립트**: `npm run build:vercel` → `frontend/dist` 출력 (Vercel 전용)
+- **SPA 라우팅**: 모든 경로 → `index.html` 리라이트 (Vue Router history 모드 대응)
 - **접근**: PC / 모바일 / 태블릿 모두 공개 URL로 접근 가능
 
 ### 브랜치 전략 (Git-Flow)
@@ -78,6 +81,7 @@ frontend/                # Vue 3 + Vite (SPA)
 | 반응형 디자인 (모바일 대응) | ✅ 완료 |
 | Vite 빌드 → Spring Boot static 연동 설정 | ✅ 완료 (설정만) |
 | "네" 버튼 클릭 → 축하 페이지 (CelebrationView) | ✅ 완료 |
+| Vercel 배포 설정 (vercel.json + build:vercel) | ✅ 완료 |
 
 ### feature/server - 백엔드 (Kotlin + Spring Boot)
 

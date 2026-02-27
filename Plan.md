@@ -72,7 +72,8 @@ frontend/                    # Vue 프로젝트 루트
     │   └── index.js         # Vue Router 설정
     ├── views/
     │   ├── CardNewsView.vue  # 카드 뉴스 페이지
-    │   └── EventView.vue     # 이벤트(프로포즈) 페이지
+    │   ├── EventView.vue     # 이벤트(프로포즈) 페이지
+    │   └── CelebrationView.vue # 축하 페이지 (파티클 애니메이션)
     ├── components/
     │   ├── CardFrame.vue     # 카드 프레임 컴포넌트
     │   ├── LetterContent.vue # 편지 컴포넌트
@@ -102,7 +103,7 @@ frontend/                    # Vue 프로젝트 루트
 
 ## 추가 개발 예정
 
-- [ ] Vercel 배포 설정 (GitHub 연동, 자동 배포)
+- [x] Vercel 배포 설정 (vercel.json, build:vercel 스크립트, SPA 리라이트)
 - [x] "네" 버튼 클릭 후 화면 (Canvas 파티클 애니메이션 + 순차 텍스트 등장)
 - [ ] 카드 뉴스 실제 콘텐츠 교체 (이미지, 날짜, 장소, 회고 글)
 - [ ] 편지 실제 내용 교체
