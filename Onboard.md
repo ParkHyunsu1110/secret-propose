@@ -60,6 +60,12 @@ frontend/                # Vue 3 + Vite (SPA)
 - **확인 URL**: `http://localhost:5173/` (카드 뉴스), `http://localhost:5173/event` (이벤트), `http://localhost:5173/celebration` (축하)
 - **모바일 확인**: `host: true` 설정으로 같은 Wi-Fi 내 모바일 접속 가능
 
+### 콘텐츠 저장 방식
+- **사진/음악**: `frontend/public/` 폴더 (정적 파일, Vercel CDN 서빙)
+- **텍스트 (카드 뉴스, 편지)**: H2 DB (서버 API로 관리)
+- **이벤트 로그 (수락, 방문)**: H2 DB (영구 저장)
+- **이미지 파일명 규칙**: `memory-{번호}.jpg` → DB `imagePath`에 `/images/memory-1.jpg` 형태 저장
+
 ### 초기 구성 (main 브랜치)
 - TestController: `GET /api/test` API
 - index.html: 루트 welcome 페이지
