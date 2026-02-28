@@ -11,6 +11,15 @@
 - **JDK**: Java 21 (설치 완료)
 - **Node.js**: 프론트엔드 빌드 (Vite + Vue 3)
 
+### 배포
+- **프론트엔드**: Vercel (GitHub 연동 자동 배포, main 브랜치)
+- **서버**: Oracle Cloud (Always Free, VM.Standard.E2.1.Micro)
+  - **Public IP**: `168.107.12.237`
+  - **OS**: Oracle Linux 9 (x86_64)
+  - **SSH 유저**: `opc`
+  - **SSH 키**: `~/Downloads/ssh-key-2026-02-28.key`
+  - **상태**: 인스턴스 생성 완료, Docker 설치 예정
+
 ### 브랜치 전략 (Git-Flow)
 - **main**: 프로젝트 동작을 위한 최소한의 코드만 유지
 - **develop**: 실제 개발 작업 진행 브랜치
