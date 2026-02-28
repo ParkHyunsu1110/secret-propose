@@ -35,7 +35,8 @@
 
 - **Backend**: Kotlin + Spring Boot
 - **Frontend**: Vue 3 + Vite (SPA)
-- **배포**: Vercel (무료 정적 호스팅, GitHub 연동 자동 배포)
+- **프론트엔드 배포**: Vercel (무료 정적 호스팅, GitHub 연동 자동 배포)
+- **서버 배포**: Oracle Cloud Always Free (VM.Standard.E2.1.Micro, JAR 직접 실행)
 - **DB**: H2 (필요 시)
 - **반응형**: 모바일 친화적 디자인 (Responsive Web)
 
@@ -114,7 +115,7 @@ frontend/                    # Vue 프로젝트 루트
 - [ ] 배경 음악 파일 추가 (`public/music/bgm.mp3`)
 - [ ] 추억 이미지 파일 추가 (`public/images/`)
 - [ ] 디자인/UX 디테일 보완 (애니메이션, 색상, 폰트 등)
-- [ ] 프론트엔드 → 서버 API 연동 (하드코딩 데이터를 API 호출로 교체)
+- [x] 프론트엔드 → 서버 API 연동 (하드코딩 데이터를 API 호출로 교체)
 
 ---
 
@@ -172,14 +173,14 @@ frontend/                    # Vue 프로젝트 루트
 
 ### 서버 구현 순서
 
-1. [ ] CORS 설정 (Vercel 프론트엔드 도메인 허용)
-2. [ ] Memory Entity + Repository + Service + Controller
-3. [ ] Letter Entity + Repository + Service + Controller
-4. [ ] ProposeLog Entity + Repository + Service + Controller
-5. [ ] VisitLog Entity + Repository + Service + Controller
-6. [ ] 초기 데이터 설정 (data.sql 또는 ApplicationRunner)
-7. [ ] 프론트엔드 API 연동 (memories.js → API 호출, LetterContent → API 호출)
-8. [ ] 서버 배포 (Railway / Render 등 무료 플랫폼)
+1. [x] CORS 설정 (Vercel 프론트엔드 도메인 허용)
+2. [x] Memory Entity + Repository + Service + Controller
+3. [x] Letter Entity + Repository + Service + Controller
+4. [x] ProposeLog Entity + Repository + Service + Controller
+5. [x] VisitLog Entity + Repository + Service + Controller
+6. [x] 초기 데이터 설정 (data.sql)
+7. [x] 프론트엔드 API 연동 (memories.js → API 호출, LetterContent → API 호출)
+8. [ ] 서버 배포 (Oracle Cloud — JAR 직접 실행)
 
 ### 기술 사항
 

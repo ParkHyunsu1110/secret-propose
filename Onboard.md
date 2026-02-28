@@ -12,12 +12,17 @@
 - **Node.js**: 프론트엔드 빌드 (Vite + Vue 3)
 
 ### 배포
-- **플랫폼**: Vercel (무료, 정적 사이트 호스팅)
-- **배포 방식**: GitHub 연동 → push 시 자동 배포
-- **설정 파일**: `vercel.json` (빌드 커맨드, 출력 디렉토리, SPA 리라이트)
-- **빌드 스크립트**: `npm run build:vercel` → `frontend/dist` 출력 (Vercel 전용)
-- **SPA 라우팅**: 모든 경로 → `index.html` 리라이트 (Vue Router history 모드 대응)
-- **접근**: PC / 모바일 / 태블릿 모두 공개 URL로 접근 가능
+- **프론트엔드**: Vercel (GitHub 연동 자동 배포, main 브랜치)
+  - **설정 파일**: `vercel.json` (SPA 리라이트)
+  - **빌드 스크립트**: `npm run build:vercel` → `frontend/dist` 출력
+  - **접근**: PC / 모바일 / 태블릿 모두 공개 URL로 접근 가능
+- **서버**: Oracle Cloud (Always Free, VM.Standard.E2.1.Micro)
+  - **Public IP**: `168.107.12.237`
+  - **OS**: Oracle Linux 9 (x86_64)
+  - **SSH 유저**: `opc`
+  - **SSH 키**: `~/Downloads/ssh-key-2026-02-28.key`
+  - **배포 방식**: JAR 직접 실행 (`deploy.sh` 스크립트)
+  - **상태**: 인스턴스 생성 완료, Java 21 설치 예정
 
 ### 브랜치 전략 (Git-Flow)
 - **main**: 프로젝트 동작을 위한 최소한의 코드만 유지
@@ -44,8 +49,9 @@ frontend/                # Vue 3 + Vite (SPA)
 │   ├── views/           # 페이지 컴포넌트
 │   ├── components/      # 공통 컴포넌트
 │   ├── composables/     # 공유 상태 (useMusic 등)
+│   ├── api/             # API 서비스 모듈
 │   ├── router/          # Vue Router
-│   └── data/            # 데이터 파일
+│   └── data/            # 폴백 데이터 파일
 └── public/              # 정적 리소스 (이미지, 음악)
 ```
 
@@ -93,12 +99,27 @@ frontend/                # Vue 3 + Vite (SPA)
 | 카드 뉴스 스와이프 제스처 (모바일 좌우 스와이프) | ✅ 완료 |
 | OG 메타 태그 + Favicon (링크 공유 미리보기) | ✅ 완료 |
 | 404 리다이렉트 (잘못된 경로 → 카드 뉴스) | ✅ 완료 |
+| API 연동 모듈 (api/index.js — 서버 API 호출) | ✅ 완료 |
+| CardNewsView API 연동 (로컬 폴백 포함) | ✅ 완료 |
+| LetterContent API 연동 (인사말/본문/맺음말 동적) | ✅ 완료 |
+| EventView 프로포즈 수락 API 연동 | ✅ 완료 |
+| 페이지 방문 기록 API 연동 (전 페이지) | ✅ 완료 |
+| 환경별 API URL 분리 (.env.production/development) | ✅ 완료 |
 
 ### feature/server - 백엔드 (Kotlin + Spring Boot)
 
 | 항목 | 상태 |
 | --- | --- |
-| 추가 개발 없음 | - |
+| H2 파일 모드 + JPA 설정 (application.yaml) | ✅ 완료 |
+| CORS 설정 (Vercel + localhost 허용) | ✅ 완료 |
+| Memory Entity/Repository/Service/Controller | ✅ 완료 |
+| Letter Entity/Repository/Service/Controller | ✅ 완료 |
+| ProposeLog Entity/Repository/Service/Controller | ✅ 완료 |
+| VisitLog Entity/Repository/Service/Controller | ✅ 완료 |
+| 초기 데이터 (data.sql — 더미 데이터) | ✅ 완료 |
+| JAR 빌드 + 배포 스크립트 (deploy.sh) | ✅ 완료 |
+| Oracle Cloud 인스턴스 생성 | ✅ 완료 |
+| 서버 Java 21 설치 + 배포 | ⏳ 진행 중 |
 
 ---
 
