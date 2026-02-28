@@ -51,6 +51,32 @@ frontend/                # Vue 3 + Vite (SPA)
 
 ---
 
+## 개발 진행 상황
+
+### feature/server - 백엔드 (Kotlin + Spring Boot)
+
+| 항목 | 상태 |
+| --- | --- |
+| H2 파일 모드 + JPA 설정 (application.yaml) | ✅ 완료 |
+| CORS 설정 (Vercel + localhost 허용) | ✅ 완료 |
+| Memory Entity/Repository/Service/Controller | ✅ 완료 |
+| Letter Entity/Repository/Service/Controller | ✅ 완료 |
+| ProposeLog Entity/Repository/Service/Controller | ✅ 완료 |
+| VisitLog Entity/Repository/Service/Controller | ✅ 완료 |
+| 초기 데이터 (data.sql — 더미 데이터) | ✅ 완료 |
+
+### API 목록
+
+| Method | URL | 설명 |
+| --- | --- | --- |
+| `GET` | `/api/memories` | 카드 뉴스 목록 조회 (정렬순) |
+| `GET` | `/api/letter` | 편지 내용 조회 |
+| `POST` | `/api/propose/accept` | 프로포즈 수락 기록 |
+| `GET` | `/api/propose/status` | 프로포즈 수락 여부 + 시각 조회 |
+| `POST` | `/api/visit` | 페이지 방문 기록 |
+
+---
+
 ## 개발 규칙
 
 ### 코드 스타일
