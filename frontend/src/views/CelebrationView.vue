@@ -37,12 +37,12 @@ let animationId = null
 let particles = []
 
 const HEART_COLORS = [
-  '#ff6b8a', '#ff8fa3', '#ffb3c1', '#ffc2d1',
-  '#e8a0bf', '#d4739d', '#f2a1c2', '#f7c6d4',
+  '#e8c170', '#f0d08a', '#d4a04a', '#c8956c',
+  '#e0b87a', '#daa060', '#f2d194', '#ecc88a',
 ]
 
 const SPARKLE_COLORS = [
-  '#ffd700', '#fff8dc', '#ffe4b5', '#ffecd2',
+  '#ffd700', '#f5c842', '#e8b830', '#f0d060',
 ]
 
 const todayFormatted = computed(() => {
@@ -207,7 +207,7 @@ onUnmounted(() => {
 .celebration-page {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #1a0a14 0%, #2d1225 40%, #3d1a35 70%, #1a0a14 100%);
+  background: linear-gradient(135deg, #fdf6e3 0%, #fef3d0 40%, #fff8e1 70%, #fdf6e3 100%);
   overflow: hidden;
 }
 
@@ -253,15 +253,15 @@ onUnmounted(() => {
 .main-text {
   font-size: 2.4rem;
   font-weight: 700;
-  color: #fff;
+  color: #5c4a3d;
   margin: 0 0 1rem 0;
-  text-shadow: 0 4px 30px rgba(232, 160, 191, 0.5);
+  text-shadow: 0 4px 30px rgba(212, 160, 74, 0.3);
   letter-spacing: 0.05em;
 }
 
 .sub-text {
   font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(92, 74, 61, 0.7);
   margin: 0 0 2rem 0;
   font-weight: 300;
   letter-spacing: 0.1em;
@@ -269,7 +269,7 @@ onUnmounted(() => {
 
 .date-text {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(139, 111, 92, 0.5);
   margin: 0;
   letter-spacing: 0.15em;
   font-weight: 300;

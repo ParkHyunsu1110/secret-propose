@@ -55,6 +55,8 @@ onMounted(async () => {
     inset 0 0 80px rgba(200, 170, 130, 0.05);
   position: relative;
   font-family: 'Nanum Myeongjo', serif;
+  max-height: 60dvh;
+  overflow-y: auto;
 }
 
 .letter-paper::before {

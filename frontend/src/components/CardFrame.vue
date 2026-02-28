@@ -48,7 +48,7 @@ onMounted(() => {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 60px rgba(100, 80, 50, 0.1);
 }
 
 .card-image-wrapper {
@@ -62,7 +62,7 @@ onMounted(() => {
   height: 100%;
   background-size: cover;
   background-position: center;
-  background-color: #f0e6ef;
+  background-color: #f5efe3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -70,7 +70,7 @@ onMounted(() => {
 
 .card-image-placeholder {
   text-align: center;
-  color: #c4a0b9;
+  color: #c8a88a;
 }
 
 .card-image-placeholder span {
@@ -91,21 +91,21 @@ onMounted(() => {
   align-items: center;
   gap: 0.4rem;
   font-size: 0.85rem;
-  color: #b08a9e;
+  color: #b09a7e;
   margin-bottom: 0.8rem;
 }
 
 .card-title {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #3d2c3e;
+  color: #4a3728;
   margin: 0 0 0.8rem 0;
   line-height: 1.3;
 }
 
 .card-description {
   font-size: 0.95rem;
-  color: #6b5570;
+  color: #6b5c4a;
   line-height: 1.7;
   margin: 0;
   word-break: keep-all;

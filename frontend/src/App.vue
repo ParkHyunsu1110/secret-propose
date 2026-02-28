@@ -32,8 +32,8 @@ function toggleMusic() {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(180, 150, 100, 0.3);
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(10px);
   cursor: pointer;
   display: flex;
@@ -43,11 +43,11 @@ function toggleMusic() {
 }
 
 .music-toggle:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .music-icon {
-  color: rgba(255, 255, 255, 0.8);
+  color: #8b6f5c;
   font-size: 1.1rem;
   animation: bounce-note 1.5s ease-in-out infinite;
 }
