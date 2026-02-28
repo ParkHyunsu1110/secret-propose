@@ -30,16 +30,21 @@
 </template>
 
 <script setup>
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import LetterContent from '@/components/LetterContent.vue'
 import RunawayButton from '@/components/RunawayButton.vue'
 import { useMusic } from '@/composables/useMusic.js'
+import { acceptPropose, recordVisit } from '@/api/index.js'
 
 const router = useRouter()
 const { play } = useMusic()
 const musicStarted = ref(false)
 const showLetter = ref(false)
+
+onMounted(() => {
+  recordVisit('event').catch(() => {})
+})
 
 async function startMusic() {
   await play()
@@ -51,6 +56,7 @@ async function startMusic() {
 }
 
 function onYes() {
+  acceptPropose().catch(() => {})
   router.push('/celebration')
 }
 </script>
