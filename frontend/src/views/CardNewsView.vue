@@ -54,6 +54,18 @@ import CardFrame from '@/components/CardFrame.vue'
 import { memories as fallbackMemories } from '@/data/memories.js'
 import { fetchMemories, recordVisit } from '@/api/index.js'
 
+function parseImages(raw) {
+  if (Array.isArray(raw)) return raw
+  if (typeof raw === 'string' && raw.startsWith('[')) {
+    try {
+      return JSON.parse(raw)
+    } catch {
+      return [raw]
+    }
+  }
+  return raw ? [raw] : []
+}
+
 const router = useRouter()
 const currentIndex = ref(0)
 const transitionName = ref('slide-left')
@@ -69,12 +81,16 @@ onMounted(async () => {
     if (data?.length) {
       memories.value = data.map((m) => ({
         ...m,
-        image: m.imagePath || m.image,
+        images: parseImages(m.imagePath || m.image || m.images),
       }))
     }
   } catch {
     /* fallback to local data */
   }
+  memories.value = memories.value.map((m) => ({
+    ...m,
+    images: m.images || parseImages(m.imagePath || m.image),
+  }))
 })
 
 function next() {

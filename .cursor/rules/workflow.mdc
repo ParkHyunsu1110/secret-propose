@@ -25,6 +25,15 @@ alwaysApply: true
 2. GitConvention.md 형식에 맞는 커밋 메시지 생성 후 표시
 3. 확인 없이 바로 커밋 + 푸시 진행 (질문하지 않음)
 
+## "배포해"
+
+지금까지의 개발 내용을 main에 병합하고, 서버와 웹을 배포한다. (질문하지 않음)
+
+1. **TextGuide 반영**: `npm run generate:data` 실행 → TextGuide.md 내용을 data.sql로 생성 (웹에서 작성된 문구가 API를 통해 표시되도록)
+2. **main 병합**: feature/web, feature/server(또는 develop)를 main에 squash merge, 충돌 시 feature 쪽 우선
+3. **서버 배포**: `./deploy.sh` 실행 (Oracle Cloud JAR 배포)
+4. **웹 배포**: `git push origin main` → Vercel 자동 배포 트리거
+
 ### 커밋 메시지 형식 (GitConvention.md 참고)
 
 ```

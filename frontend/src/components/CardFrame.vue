@@ -1,11 +1,35 @@
 <template>
   <div class="card-frame">
     <div class="card-image-wrapper">
-      <div class="card-image" :style="{ backgroundImage: `url(${memory.image})` }">
+      <button
+        v-if="images.length > 1 && imageIndex > 0"
+        class="card-arrow card-arrow-left"
+        aria-label="이전 사진"
+        @click.prevent="imageIndex--"
+      >
+        ‹
+      </button>
+      <div class="card-image" :style="{ backgroundImage: `url(${currentImage})` }">
         <div class="card-image-placeholder" v-if="!hasImage">
           <span>📷</span>
           <p>사진을 추가해주세요</p>
         </div>
+      </div>
+      <button
+        v-if="images.length > 1 && imageIndex < images.length - 1"
+        class="card-arrow card-arrow-right"
+        aria-label="다음 사진"
+        @click.prevent="imageIndex++"
+      >
+        ›
+      </button>
+      <div v-if="images.length > 1" class="card-image-dots">
+        <span
+          v-for="(_, i) in images"
+          :key="i"
+          class="card-image-dot"
+          :class="{ active: i === imageIndex }"
+        />
       </div>
     </div>
     <div class="card-content">
@@ -21,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 
 const props = defineProps({
   memory: {
@@ -30,14 +54,41 @@ const props = defineProps({
   },
 })
 
+const images = computed(() => {
+  const raw = props.memory?.images || props.memory?.image
+  if (Array.isArray(raw)) return raw
+  if (typeof raw === 'string' && raw.startsWith('[')) {
+    try {
+      return JSON.parse(raw)
+    } catch {
+      return raw ? [raw] : []
+    }
+  }
+  return raw ? [raw] : []
+})
+
+const imageIndex = ref(0)
+const currentImage = computed(() => images.value[imageIndex.value] || '')
+
 const hasImage = ref(false)
 
-onMounted(() => {
-  const img = new Image()
-  img.onload = () => (hasImage.value = true)
-  img.onerror = () => (hasImage.value = false)
-  img.src = props.memory.image
-})
+watch(
+  () => currentImage.value,
+  (src) => {
+    if (!src) return
+    const img = new Image()
+    img.onload = () => (hasImage.value = true)
+    img.onerror = () => (hasImage.value = false)
+    img.src = src
+  },
+  { immediate: true }
+)
+
+watch(
+  () => props.memory,
+  () => (imageIndex.value = 0),
+  { deep: true }
+)
 </script>
 
 <style scoped>
@@ -55,6 +106,7 @@ onMounted(() => {
   width: 100%;
   aspect-ratio: 4 / 3;
   overflow: hidden;
+  position: relative;
 }
 
 .card-image {
@@ -80,6 +132,63 @@ onMounted(() => {
 .card-image-placeholder p {
   margin-top: 0.5rem;
   font-size: 0.9rem;
+}
+
+.card-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(6px);
+  color: rgba(80, 60, 40, 0.9);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.card-arrow:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.card-arrow-left {
+  left: 10px;
+}
+
+.card-arrow-right {
+  right: 10px;
+}
+
+.card-image-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  z-index: 2;
+}
+
+.card-image-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: all 0.2s;
+}
+
+.card-image-dot.active {
+  background: rgba(255, 255, 255, 0.95);
+  transform: scale(1.2);
 }
 
 .card-content {
