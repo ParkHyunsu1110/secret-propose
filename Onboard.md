@@ -18,7 +18,12 @@
   - **OS**: Oracle Linux 9 (x86_64)
   - **SSH 유저**: `opc`
   - **SSH 키**: `~/Downloads/ssh-key-2026-02-28.key`
-  - **상태**: 인스턴스 생성 완료, Docker 설치 예정
+  - **Java**: Oracle JDK 21.0.10 (`/opt/java/jdk-21.0.10`)
+  - **앱 경로**: `/home/opc/app/app.jar`
+  - **Swap**: 1.5GB (기본 502MB + 추가 1024MB)
+  - **배포**: `deploy.sh` 스크립트 (빌드 → 전송 → 실행)
+  - **API URL**: `http://168.107.12.237:8080`
+  - **상태**: 배포 완료, API 동작 확인
 
 ### 브랜치 전략 (Git-Flow)
 - **main**: 프로젝트 동작을 위한 최소한의 코드만 유지
@@ -73,6 +78,10 @@ frontend/                # Vue 3 + Vite (SPA)
 | ProposeLog Entity/Repository/Service/Controller | ✅ 완료 |
 | VisitLog Entity/Repository/Service/Controller | ✅ 완료 |
 | 초기 데이터 (data.sql — 더미 데이터) | ✅ 완료 |
+| Oracle Cloud 인스턴스 생성 (VM.Standard.E2.1.Micro) | ✅ 완료 |
+| 서버 환경 구성 (Java 21, Swap 1GB, 방화벽 8080) | ✅ 완료 |
+| Spring Boot JAR 배포 + API 동작 확인 | ✅ 완료 |
+| 배포 스크립트 (deploy.sh) | ✅ 완료 |
 
 ### API 목록
 
