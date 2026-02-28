@@ -27,6 +27,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { recordVisit } from '@/api/index.js'
 
 const canvasRef = ref(null)
 const phase = ref(0)
@@ -186,6 +187,7 @@ function handleResize() {
 }
 
 onMounted(() => {
+  recordVisit('celebration').catch(() => {})
   initCanvas()
   window.addEventListener('resize', handleResize)
 

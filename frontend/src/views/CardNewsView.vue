@@ -48,20 +48,37 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import CardFrame from '@/components/CardFrame.vue'
-import { memories } from '@/data/memories.js'
+import { memories as fallbackMemories } from '@/data/memories.js'
+import { fetchMemories, recordVisit } from '@/api/index.js'
 
 const router = useRouter()
 const currentIndex = ref(0)
 const transitionName = ref('slide-left')
+const memories = ref(fallbackMemories)
 
-const currentMemory = computed(() => memories[currentIndex.value])
-const isLast = computed(() => currentIndex.value === memories.length - 1)
+const currentMemory = computed(() => memories.value[currentIndex.value])
+const isLast = computed(() => currentIndex.value === memories.value.length - 1)
+
+onMounted(async () => {
+  recordVisit('card-news').catch(() => {})
+  try {
+    const data = await fetchMemories()
+    if (data?.length) {
+      memories.value = data.map((m) => ({
+        ...m,
+        image: m.imagePath || m.image,
+      }))
+    }
+  } catch {
+    /* fallback to local data */
+  }
+})
 
 function next() {
-  if (currentIndex.value < memories.length - 1) {
+  if (currentIndex.value < memories.value.length - 1) {
     transitionName.value = 'slide-left'
     currentIndex.value++
   }

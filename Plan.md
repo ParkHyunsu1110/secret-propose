@@ -35,7 +35,8 @@
 
 - **Backend**: Kotlin + Spring Boot
 - **Frontend**: Vue 3 + Vite (SPA)
-- **배포**: Vercel (무료 정적 호스팅, GitHub 연동 자동 배포)
+- **프론트엔드 배포**: Vercel (무료 정적 호스팅, GitHub 연동 자동 배포)
+- **서버 배포**: Oracle Cloud Always Free (VM.Standard.E2.1.Micro, JAR 직접 실행)
 - **DB**: H2 (필요 시)
 - **반응형**: 모바일 친화적 디자인 (Responsive Web)
 
@@ -101,16 +102,135 @@ frontend/                    # Vue 프로젝트 루트
 
 ---
 
-## 추가 개발 예정
+## 추가 개발 예정 (프론트엔드)
 
 - [x] Vercel 배포 설정 (vercel.json, build:vercel 스크립트, SPA 리라이트)
 - [x] "네" 버튼 클릭 후 화면 (Canvas 파티클 애니메이션 + 순차 텍스트 등장)
-- [ ] 카드 뉴스 실제 콘텐츠 교체 (이미지, 날짜, 장소, 회고 글)
-- [ ] 편지 실제 내용 교체
-- [ ] 배경 음악 파일 추가 (`public/music/bgm.mp3`)
-- [ ] 추억 이미지 파일 추가 (`public/images/`)
 - [x] 배경 음악 전역화 (composable로 페이지 전환 시 끊김 방지)
 - [x] 카드 뉴스 모바일 스와이프 제스처
 - [x] OG 메타 태그 + Favicon + theme-color
 - [x] 404 리다이렉트 라우트
+- [ ] 카드 뉴스 실제 콘텐츠 교체 (이미지, 날짜, 장소, 회고 글)
+- [ ] 편지 실제 내용 교체
+- [ ] 배경 음악 파일 추가 (`public/music/bgm.mp3`)
+- [ ] 추억 이미지 파일 추가 (`public/images/`)
 - [ ] 디자인/UX 디테일 보완 (애니메이션, 색상, 폰트 등)
+- [x] 프론트엔드 → 서버 API 연동 (하드코딩 데이터를 API 호출로 교체)
+
+---
+
+## 서버 개발 계획 (Kotlin + Spring Boot)
+
+### 목적
+
+프론트엔드에 하드코딩된 데이터를 서버 API로 관리하고, 프로포즈 수락/방문 등 이벤트를 기록한다.
+
+### API 목록
+
+| Method | URL | 설명 |
+| --- | --- | --- |
+| `GET` | `/api/memories` | 카드 뉴스 목록 조회 (정렬순) |
+| `GET` | `/api/letter` | 편지 내용 조회 |
+| `POST` | `/api/propose/accept` | 프로포즈 수락 기록 (날짜/시간/UA 저장) |
+| `GET` | `/api/propose/status` | 프로포즈 수락 여부 + 수락 시각 조회 |
+| `POST` | `/api/visit` | 페이지 방문 기록 |
+
+### Entity 설계
+
+#### Memory (카드 뉴스)
+| 필드 | 타입 | 설명 |
+| --- | --- | --- |
+| id | Long (PK) | 자동 생성 |
+| date | String | 날짜 (예: "2024.01.01") |
+| place | String | 장소 |
+| title | String | 제목 |
+| description | String | 회고 글 |
+| imagePath | String | 이미지 경로 |
+| sortOrder | Int | 정렬 순서 |
+
+#### Letter (편지)
+| 필드 | 타입 | 설명 |
+| --- | --- | --- |
+| id | Long (PK) | 자동 생성 |
+| greeting | String | 인사말 (예: "사랑하는 당신에게") |
+| closing | String | 맺음말 |
+| paragraphs | String (TEXT) | 본문 (JSON 배열 형태) |
+
+#### ProposeLog (프로포즈 기록)
+| 필드 | 타입 | 설명 |
+| --- | --- | --- |
+| id | Long (PK) | 자동 생성 |
+| acceptedAt | LocalDateTime | 수락 시각 |
+| userAgent | String | 브라우저 정보 |
+
+#### VisitLog (방문 기록)
+| 필드 | 타입 | 설명 |
+| --- | --- | --- |
+| id | Long (PK) | 자동 생성 |
+| page | String | 방문 페이지 (/, /event, /celebration) |
+| visitedAt | LocalDateTime | 방문 시각 |
+| userAgent | String | 브라우저 정보 |
+
+### 서버 구현 순서
+
+1. [x] CORS 설정 (Vercel 프론트엔드 도메인 허용)
+2. [x] Memory Entity + Repository + Service + Controller
+3. [x] Letter Entity + Repository + Service + Controller
+4. [x] ProposeLog Entity + Repository + Service + Controller
+5. [x] VisitLog Entity + Repository + Service + Controller
+6. [x] 초기 데이터 설정 (data.sql)
+7. [x] 프론트엔드 API 연동 (memories.js → API 호출, LetterContent → API 호출)
+8. [ ] 서버 배포 (Oracle Cloud — JAR 직접 실행)
+
+### 기술 사항
+
+- **DB**: H2 (파일 모드 — 서버 재시작 시에도 데이터 유지)
+- **CORS**: Vercel 배포 도메인 + localhost 허용
+- **응답 형식**: 기존 `ApiResponse` 공통 응답 사용
+- **예외 처리**: 기존 `GlobalExceptionHandler` + `ResultCode` 사용
+
+---
+
+## 콘텐츠 저장 방식
+
+### 저장 위치 구분
+
+| 콘텐츠 | 저장 위치 | 이유 |
+| --- | --- | --- |
+| 사진 (추억 이미지) | `frontend/public/images/` | 정적 파일 → Vercel CDN 서빙, 빠르고 단순 |
+| 배경 음악 | `frontend/public/music/` | 정적 파일 → Vercel CDN 서빙 |
+| OG 썸네일 | `frontend/public/images/` | 링크 공유 미리보기용 정적 이미지 |
+| 카드 뉴스 텍스트 (날짜, 장소, 제목, 회고 글) | H2 DB (Memory 테이블) | 서버 API로 관리, 코드 수정 없이 변경 가능 |
+| 편지 텍스트 (인사말, 본문, 맺음말) | H2 DB (Letter 테이블) | 서버 API로 관리, 코드 수정 없이 변경 가능 |
+| 프로포즈 수락/방문 기록 | H2 DB (ProposeLog, VisitLog) | 이벤트 로그 영구 저장 |
+
+### 정적 파일 경로 규칙
+
+```
+frontend/public/
+├── images/
+│   ├── memory-1.jpg          # 추억 사진 (카드 뉴스용)
+│   ├── memory-2.jpg
+│   ├── memory-3.jpg
+│   ├── ...
+│   └── og-thumbnail.png      # 링크 공유 시 미리보기 썸네일
+└── music/
+    └── bgm.mp3               # 이벤트 페이지 배경 음악
+```
+
+- 이미지 파일명: `memory-{번호}.jpg` (DB의 `imagePath` 필드에 `/images/memory-1.jpg` 형태로 저장)
+- 프론트엔드에서 이미지 접근: Vercel 정적 서빙 (`https://도메인/images/memory-1.jpg`)
+- 사진은 Git 레포에 포함되며, push 시 Vercel에 자동 배포
+
+### DB 텍스트 데이터 (서버 초기 데이터로 등록)
+
+카드 뉴스와 편지 텍스트는 서버의 초기 데이터(data.sql 또는 ApplicationRunner)로 등록한다.
+사진 파일은 직접 `frontend/public/images/`에 넣고, DB에는 해당 경로만 저장한다.
+
+### 준비물 체크리스트
+
+- [ ] 추억 사진 파일 (`memory-1.jpg`, `memory-2.jpg`, ...) → `frontend/public/images/`에 추가
+- [ ] 배경 음악 파일 (`bgm.mp3`) → `frontend/public/music/`에 추가
+- [ ] OG 썸네일 이미지 (`og-thumbnail.png`) → `frontend/public/images/`에 추가
+- [ ] 카드 뉴스 텍스트 내용 정리 (날짜, 장소, 제목, 회고 글) → 서버 초기 데이터로 등록
+- [ ] 편지 내용 정리 (인사말, 본문 단락, 맺음말) → 서버 초기 데이터로 등록

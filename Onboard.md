@@ -53,8 +53,9 @@ frontend/                # Vue 3 + Vite (SPA)
 │   ├── views/           # 페이지 컴포넌트
 │   ├── components/      # 공통 컴포넌트
 │   ├── composables/     # 공유 상태 (useMusic 등)
+│   ├── api/             # API 서비스 모듈
 │   ├── router/          # Vue Router
-│   └── data/            # 데이터 파일
+│   └── data/            # 폴백 데이터 파일
 └── public/              # 정적 리소스 (이미지, 음악)
 ```
 
