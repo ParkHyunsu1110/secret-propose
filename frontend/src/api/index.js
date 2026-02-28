@@ -9,7 +9,7 @@ async function request(path, options = {}) {
   if (!res.ok) throw new Error(`API ${res.status}`)
 
   const json = await res.json()
-  if (json.code !== 'SUCCESS') throw new Error(json.message || 'API Error')
+  if (json.code !== '0000') throw new Error(json.message || 'API Error')
 
   return json.data
 }
