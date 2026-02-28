@@ -15,8 +15,8 @@ html {
 
 body {
   font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(135deg, #1a0a14 0%, #2d1225 50%, #1a0a14 100%);
-  color: #333;
+  background: linear-gradient(135deg, #fdf6e3 0%, #fef9ef 40%, #fff8e1 100%);
+  color: #4a3728;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -52,6 +52,6 @@ button {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(180, 150, 100, 0.25);
   border-radius: 2px;
 }

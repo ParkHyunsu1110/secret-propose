@@ -1,13 +1,13 @@
 <template>
   <div class="event-page">
-    <div v-if="!musicStarted" class="music-overlay" @click="startMusic">
+    <div v-if="!started" class="music-overlay" @click="start">
       <div class="music-prompt">
-        <span class="music-icon">♪</span>
+        <span class="music-icon">✉</span>
         <p>화면을 터치하면<br />특별한 이야기가 시작됩니다</p>
       </div>
     </div>
 
-    <div v-else class="event-content">
+    <div v-if="started" class="event-content">
       <transition name="fade-up">
         <div v-if="showLetter" class="letter-section">
           <LetterContent />
@@ -39,16 +39,16 @@ import { acceptPropose, recordVisit } from '@/api/index.js'
 
 const router = useRouter()
 const { play } = useMusic()
-const musicStarted = ref(false)
+const started = ref(false)
 const showLetter = ref(false)
 
 onMounted(() => {
   recordVisit('event').catch(() => {})
 })
 
-async function startMusic() {
-  await play()
-  musicStarted.value = true
+async function start() {
+  play().catch(() => {})
+  started.value = true
   await nextTick()
   setTimeout(() => {
     showLetter.value = true
@@ -77,7 +77,7 @@ function onYes() {
 
 .music-prompt {
   text-align: center;
-  color: rgba(255, 255, 255, 0.9);
+  color: #8b6f5c;
   animation: float 3s ease-in-out infinite;
 }
 
@@ -117,9 +117,8 @@ function onYes() {
 .proposal-question {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: #5c4a3d;
   margin: 0 0 2rem 0;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .button-group {
@@ -133,7 +132,7 @@ function onYes() {
   padding: 0.9rem 2.5rem;
   border: none;
   border-radius: 50px;
-  background: linear-gradient(135deg, #e8a0bf, #d4739d);
+  background: linear-gradient(135deg, #e8c170, #d4a04a);
   color: #fff;
   font-size: 1.05rem;
   font-weight: 600;
@@ -144,7 +143,7 @@ function onYes() {
 
 .yes-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(212, 115, 157, 0.4);
+  box-shadow: 0 8px 25px rgba(212, 160, 74, 0.4);
 }
 
 .yes-btn:active {

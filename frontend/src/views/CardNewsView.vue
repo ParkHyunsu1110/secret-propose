@@ -141,12 +141,12 @@ function onTouchEnd(e) {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(180, 150, 100, 0.3);
   transition: all 0.3s ease;
 }
 
 .dot.active {
-  background: rgba(255, 255, 255, 0.9);
+  background: #c8956c;
   transform: scale(1.3);
 }
 
@@ -169,13 +169,14 @@ function onTouchEnd(e) {
 }
 
 .nav-btn.prev {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+  background: rgba(200, 170, 130, 0.15);
+  color: #8b6f5c;
   backdrop-filter: blur(10px);
+  border: 1px solid rgba(200, 170, 130, 0.3);
 }
 
 .nav-btn.prev:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(200, 170, 130, 0.25);
 }
 
 .nav-btn.prev.hidden {
@@ -183,8 +184,9 @@ function onTouchEnd(e) {
 }
 
 .nav-btn.next {
-  background: rgba(255, 255, 255, 0.9);
-  color: #3d2c3e;
+  background: #fff;
+  color: #5c4a3d;
+  border: 1px solid rgba(200, 170, 130, 0.3);
 }
 
 .nav-btn.next:hover {
@@ -194,19 +196,19 @@ function onTouchEnd(e) {
 }
 
 .nav-btn.event-btn {
-  background: linear-gradient(135deg, #e8a0bf, #d4739d);
+  background: linear-gradient(135deg, #e8c170, #d4a04a);
   color: #fff;
   animation: pulse 2s ease-in-out infinite;
 }
 
 .nav-btn.event-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(212, 115, 157, 0.4);
+  box-shadow: 0 6px 20px rgba(212, 160, 74, 0.4);
 }
 
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 115, 157, 0.4); }
-  50% { box-shadow: 0 0 0 10px rgba(212, 115, 157, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 160, 74, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(212, 160, 74, 0); }
 }
 
 /* Slide transitions */
