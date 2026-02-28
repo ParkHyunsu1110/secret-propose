@@ -1,0 +1,8 @@
+{
+  "name": "secret-propose",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate:data": "node scripts/generate-data.js"
+  }
+}

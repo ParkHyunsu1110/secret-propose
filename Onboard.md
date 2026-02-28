@@ -22,7 +22,7 @@
   - **SSH 유저**: `opc`
   - **SSH 키**: `~/Downloads/ssh-key-2026-02-28.key`
   - **배포 방식**: JAR 직접 실행 (`deploy.sh` 스크립트)
-  - **상태**: 인스턴스 생성 완료, Java 21 설치 예정
+  - **상태**: 배포 완료 (API `http://168.107.12.237:8080/api/memories` 동작 확인)
 
 ### 브랜치 전략 (Git-Flow)
 - **main**: 프로젝트 동작을 위한 최소한의 코드만 유지
@@ -68,9 +68,9 @@ frontend/                # Vue 3 + Vite (SPA)
 
 ### 콘텐츠 저장 방식
 - **사진/음악**: `frontend/public/` 폴더 (정적 파일, Vercel CDN 서빙)
-- **텍스트 (카드 뉴스, 편지)**: H2 DB (서버 API로 관리)
+- **텍스트 (카드 뉴스, 편지)**: `TextGuide.md` 작성 → `npm run generate:data` → `data.sql` 생성 → H2 DB
 - **이벤트 로그 (수락, 방문)**: H2 DB (영구 저장)
-- **이미지 파일명 규칙**: `memory-{번호}.jpg` → DB `imagePath`에 `/images/memory-1.jpg` 형태 저장
+- **이미지 파일명 규칙**: `memory-{번호}.jpg` 또는 TextGuide `- 사진:` 필드에 쉼표 구분 다중 지정. DB `image_path`에 JSON 배열 저장
 
 ### 초기 구성 (main 브랜치)
 - TestController: `GET /api/test` API
@@ -105,6 +105,11 @@ frontend/                # Vue 3 + Vite (SPA)
 | EventView 프로포즈 수락 API 연동 | ✅ 완료 |
 | 페이지 방문 기록 API 연동 (전 페이지) | ✅ 완료 |
 | 환경별 API URL 분리 (.env.production/development) | ✅ 완료 |
+| UI 밝은 테마 (크림/노란색 계열) | ✅ 완료 |
+| 편지 영역 스크롤 지원 | ✅ 완료 |
+| 음악 없어도 편지 화면 정상 진입 | ✅ 완료 |
+| TextGuide.md + generate-data.js (콘텐츠 파싱 → data.sql) | ✅ 완료 |
+| 카드 뉴스 다중 사진 (인디케이터, 좌우 화살표) | ✅ 완료 |
 
 ### feature/server - 백엔드 (Kotlin + Spring Boot)
 
@@ -119,7 +124,7 @@ frontend/                # Vue 3 + Vite (SPA)
 | 초기 데이터 (data.sql — 더미 데이터) | ✅ 완료 |
 | JAR 빌드 + 배포 스크립트 (deploy.sh) | ✅ 완료 |
 | Oracle Cloud 인스턴스 생성 | ✅ 완료 |
-| 서버 Java 21 설치 + 배포 | ⏳ 진행 중 |
+| 서버 Java 21 설치 + 배포 | ✅ 완료 |
 
 ---
 
