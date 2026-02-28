@@ -22,7 +22,7 @@
   - **SSH 유저**: `opc`
   - **SSH 키**: `~/Downloads/ssh-key-2026-02-28.key`
   - **배포 방식**: JAR 직접 실행 (`deploy.sh` 스크립트)
-  - **상태**: 인스턴스 생성 완료, Java 21 설치 예정
+  - **상태**: 배포 완료 (API `http://168.107.12.237:8080/api/memories` 동작 확인)
 
 ### 브랜치 전략 (Git-Flow)
 - **main**: 프로젝트 동작을 위한 최소한의 코드만 유지
@@ -124,7 +124,7 @@ frontend/                # Vue 3 + Vite (SPA)
 | 초기 데이터 (data.sql — 더미 데이터) | ✅ 완료 |
 | JAR 빌드 + 배포 스크립트 (deploy.sh) | ✅ 완료 |
 | Oracle Cloud 인스턴스 생성 | ✅ 완료 |
-| 서버 Java 21 설치 + 배포 | ⏳ 진행 중 |
+| 서버 Java 21 설치 + 배포 | ✅ 완료 |
 
 ---
 

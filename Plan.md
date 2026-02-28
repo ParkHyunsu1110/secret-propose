@@ -114,7 +114,7 @@ frontend/                    # Vue 프로젝트 루트
 - [ ] 편지 실제 내용 교체
 - [ ] 배경 음악 파일 추가 (`public/music/bgm.mp3`)
 - [ ] 추억 이미지 파일 추가 (`public/images/`)
-- [ ] 디자인/UX 디테일 보완 (애니메이션, 색상, 폰트 등)
+- [x] 디자인/UX 디테일 보완 (밝은 테마, 나눔명조 폰트, 편지 스크롤, 음악 토글, 다중 사진 UI 등)
 - [x] 프론트엔드 → 서버 API 연동 (하드코딩 데이터를 API 호출로 교체)
 - [x] TextGuide.md + generate-data.js (콘텐츠 파싱 → data.sql 자동 생성)
 - [x] 카드 뉴스 다중 사진 (인디케이터, 좌우 화살표, TextGuide `- 사진:` 필드)
@@ -182,7 +182,7 @@ frontend/                    # Vue 프로젝트 루트
 5. [x] VisitLog Entity + Repository + Service + Controller
 6. [x] 초기 데이터 설정 (data.sql)
 7. [x] 프론트엔드 API 연동 (memories.js → API 호출, LetterContent → API 호출)
-8. [ ] 서버 배포 (Oracle Cloud — JAR 직접 실행)
+8. [x] 서버 배포 (Oracle Cloud — JAR 직접 실행)
 
 ### 기술 사항
 
