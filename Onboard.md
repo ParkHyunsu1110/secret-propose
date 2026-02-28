@@ -12,12 +12,21 @@
 - **Node.js**: 프론트엔드 빌드 (Vite + Vue 3)
 
 ### 배포
-- **플랫폼**: Vercel (무료, 정적 사이트 호스팅)
-- **배포 방식**: GitHub 연동 → push 시 자동 배포
-- **설정 파일**: `vercel.json` (빌드 커맨드, 출력 디렉토리, SPA 리라이트)
-- **빌드 스크립트**: `npm run build:vercel` → `frontend/dist` 출력 (Vercel 전용)
-- **SPA 라우팅**: 모든 경로 → `index.html` 리라이트 (Vue Router history 모드 대응)
-- **접근**: PC / 모바일 / 태블릿 모두 공개 URL로 접근 가능
+- **프론트엔드**: Vercel (GitHub 연동 자동 배포, main 브랜치)
+  - **설정 파일**: `vercel.json` (SPA 리라이트)
+  - **빌드 스크립트**: `npm run build:vercel` → `frontend/dist` 출력
+  - **접근**: PC / 모바일 / 태블릿 모두 공개 URL로 접근 가능
+- **서버**: Oracle Cloud (Always Free, VM.Standard.E2.1.Micro)
+  - **Public IP**: `168.107.12.237`
+  - **OS**: Oracle Linux 9 (x86_64)
+  - **SSH 유저**: `opc`
+  - **SSH 키**: `~/Downloads/ssh-key-2026-02-28.key`
+  - **Java**: Oracle JDK 21.0.10 (`/opt/java/jdk-21.0.10`)
+  - **앱 경로**: `/home/opc/app/app.jar`
+  - **Swap**: 1.5GB (기본 502MB + 추가 1024MB)
+  - **배포**: `deploy.sh` 스크립트 (빌드 → 전송 → 실행)
+  - **API URL**: `http://168.107.12.237:8080`
+  - **상태**: 배포 완료, API 동작 확인
 
 ### 브랜치 전략 (Git-Flow)
 - **main**: 프로젝트 동작을 위한 최소한의 코드만 유지
@@ -76,23 +85,46 @@ frontend/                # Vue 3 + Vite (SPA)
 | --- | --- |
 | Vue 3 + Vite 프로젝트 세팅 | ✅ 완료 |
 | Vue Router 설정 (`/` → 카드 뉴스, `/event` → 이벤트) | ✅ 완료 |
-| 카드 뉴스 페이지 (CardNewsView + CardFrame) | ✅ 완료 (더미 데이터) |
-| 이벤트 페이지 (편지 + 배경 음악 + 프로포즈) | ✅ 완료 (더미 내용) |
+| 카드 뉴스 페이지 (CardNewsView + CardFrame) | ✅ 완료 |
+| 이벤트 페이지 (편지 + 배경 음악 + 프로포즈) | ✅ 완료 |
 | "아니요" 버튼 도망 로직 (PC 호버 + 모바일 터치) | ✅ 완료 |
 | 반응형 디자인 (모바일 대응) | ✅ 완료 |
-| Vite 빌드 → Spring Boot static 연동 설정 | ✅ 완료 (설정만) |
+| Vite 빌드 → Spring Boot static 연동 설정 | ✅ 완료 |
 | "네" 버튼 클릭 → 축하 페이지 (CelebrationView) | ✅ 완료 |
 | Vercel 배포 설정 (vercel.json + build:vercel) | ✅ 완료 |
 | 배경 음악 전역화 (페이지 전환 시 끊김 방지) | ✅ 완료 |
 | 카드 뉴스 스와이프 제스처 (모바일 좌우 스와이프) | ✅ 완료 |
 | OG 메타 태그 + Favicon (링크 공유 미리보기) | ✅ 완료 |
 | 404 리다이렉트 (잘못된 경로 → 카드 뉴스) | ✅ 완료 |
+| API 연동 (서버 API 호출 + 로컬 폴백) | ✅ 완료 |
+| 편지 나눔명조 폰트 적용 | ✅ 완료 |
+| 음악 토글 버튼 | ✅ 완료 |
 
 ### feature/server - 백엔드 (Kotlin + Spring Boot)
 
 | 항목 | 상태 |
 | --- | --- |
-| 추가 개발 없음 | - |
+| H2 파일 모드 + JPA 설정 (application.yaml) | ✅ 완료 |
+| CORS 설정 (Vercel + localhost 허용) | ✅ 완료 |
+| Memory Entity/Repository/Service/Controller | ✅ 완료 |
+| Letter Entity/Repository/Service/Controller | ✅ 완료 |
+| ProposeLog Entity/Repository/Service/Controller | ✅ 완료 |
+| VisitLog Entity/Repository/Service/Controller | ✅ 완료 |
+| 초기 데이터 (data.sql — 더미 데이터) | ✅ 완료 |
+| Oracle Cloud 인스턴스 생성 (VM.Standard.E2.1.Micro) | ✅ 완료 |
+| 서버 환경 구성 (Java 21, Swap 1GB, 방화벽 8080) | ✅ 완료 |
+| Spring Boot JAR 배포 + API 동작 확인 | ✅ 완료 |
+| 배포 스크립트 (deploy.sh) | ✅ 완료 |
+
+### API 목록
+
+| Method | URL | 설명 |
+| --- | --- | --- |
+| `GET` | `/api/memories` | 카드 뉴스 목록 조회 (정렬순) |
+| `GET` | `/api/letter` | 편지 내용 조회 |
+| `POST` | `/api/propose/accept` | 프로포즈 수락 기록 |
+| `GET` | `/api/propose/status` | 프로포즈 수락 여부 + 시각 조회 |
+| `POST` | `/api/visit` | 페이지 방문 기록 |
 
 ---
 
