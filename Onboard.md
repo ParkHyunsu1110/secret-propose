@@ -116,6 +116,8 @@ frontend/                # Vue 3 + Vite (SPA)
 | 이미지 변환 스크립트 (HEIC→JPG, memory-NNN 형식) | ✅ 완료 |
 | 추억 사진 실제 파일 추가 (87장, memory-001~087.jpg) | ✅ 완료 |
 | memories.js 폴백 데이터 picsum → 프로젝트 이미지로 수정 (Vercel 배포 시 랜덤 사진 이슈 해결) | ✅ 완료 |
+| 카드 뉴스 사진 영역만 표시 (날짜/제목/설명 영역 숨김) | ✅ 완료 |
+| 카드 1개 + 사진 87장 구조 (TextGuide `1-87` 범위, generate-data 확장, memories.js 폴백) | ✅ 완료 |
 
 ### 카드 뉴스 다중 사진 UI 규칙
 

@@ -36,15 +36,7 @@
         />
       </div>
     </div>
-    <div class="card-content">
-      <div class="card-meta">
-        <span class="card-date">{{ memory.date }}</span>
-        <span class="card-divider">·</span>
-        <span class="card-place">{{ memory.place }}</span>
-      </div>
-      <h2 class="card-title">{{ memory.title }}</h2>
-      <p class="card-description">{{ memory.description }}</p>
-    </div>
+    <!-- 카드 텍스트(날짜/제목/설명) 숨김, 사진 영역만 표시 -->
   </div>
 </template>
 

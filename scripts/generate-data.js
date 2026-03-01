@@ -34,13 +34,26 @@ function parseTextGuide(content) {
       const descMatch = block.match(/- 설명:\s*([\s\S]*?)(?=\n\n|\n---|\n### |\n## |$)/)
       const desc = descMatch?.[1]?.trim()?.replace(/\n\s*/g, ' ') || ''
       const photoMatch = block.match(/- 사진:\s*(.+?)(?:\n|$)/)?.[1]?.trim()
-      const imagePaths = photoMatch
-        ? photoMatch.split(/[,，]/).map((f) => {
+      let imagePaths = []
+      if (photoMatch) {
+        const trimmed = photoMatch.trim()
+        const rangeMatch = trimmed.match(/^(\d+)\s*[-~]\s*(\d+)$/)
+        if (rangeMatch) {
+          const [, start, end] = rangeMatch.map(Number)
+          imagePaths = Array.from(
+            { length: Math.max(0, end - start + 1) },
+            (_, i) => `/images/memory-${String(start + i).padStart(3, '0')}.jpg`
+          )
+        } else {
+          imagePaths = trimmed.split(/[,，]/).map((f) => {
             const s = f.trim()
-            return s.startsWith('http') ? s : `/images/${s}`
+            return s.startsWith('http') ? s : (s.includes('/') ? s : `/images/${s}`)
           }).filter(Boolean)
-        : [`/images/memory-${String(num).padStart(3, '0')}.jpg`]
-      if (date || place || title || desc) {
+        }
+      } else {
+        imagePaths = [`/images/memory-${String(num).padStart(3, '0')}.jpg`]
+      }
+      if (imagePaths.length > 0 || date || place || title || desc) {
         memories.push({
           id: parseInt(num, 10),
           date,
