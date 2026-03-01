@@ -2,7 +2,7 @@
 -- TextGuide.md에서 자동 생성됨 (npm run generate:data)
 
 MERGE INTO memory (id, date, place, title, description, image_path, sort_order) KEY(id) VALUES
-(1, '2023.03.31', '사당역', '우리의 첫 만남', '자기랑 처음 만난 날, 그렇게 떨릴 수가 없더라ㅎㅎ 그래서 그런지 심장도 터지는 줄 알았어ㅎㅎㅎ', '["https://picsum.photos/400/300?random=1","https://picsum.photos/400/300?random=2","https://picsum.photos/400/300?random=3"]', 1),
+(1, '2023.03.31', '사당역', '우리의 첫 만남', '자기랑 처음 만난 날, 그렇게 떨릴 수가 없더라ㅎㅎ 그래서 그런지 심장도 터지는 줄 알았어ㅎㅎㅎ', '["/images/memory-001.jpg","/images/memory-002.jpg","/images/memory-003.jpg"]', 1),
 (2, '2024.03.14', '한강 공원', '봄날의 산책', '벚꽃이 흩날리던 한강변을 함께 걸었지. 네 손을 처음 잡았던 그 순간, 심장이 터질 것 같았어.', '["/images/memory-002.jpg"]', 2),
 (3, '2024.06.20', '제주도', '첫 여행', '우리의 첫 여행지였던 제주도. 바다를 보며 나란히 앉아 있던 그 시간이 가장 행복했어.', '["/images/memory-003.jpg"]', 3),
 (4, '2024.12.25', '우리 단골 카페', '크리스마스', '크리스마스에 함께했던 따뜻한 시간. 네가 준비한 깜짝 선물에 감동받았던 기억, 영원히 잊지 못할 거야.', '["/images/memory-004.jpg"]', 4)
