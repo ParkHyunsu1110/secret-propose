@@ -5,9 +5,30 @@
       @touchstart="onTouchStart"
       @touchend="onTouchEnd"
     >
-      <transition :name="transitionName" mode="out-in">
-        <CardFrame :key="currentIndex" :memory="currentMemory" />
-      </transition>
+      <div class="card-frame-wrapper">
+        <button
+          class="card-nav-arrow card-nav-arrow-left"
+          :class="{ hidden: currentIndex === 0 }"
+          aria-label="이전"
+          @click="prev"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+        <transition :name="transitionName" mode="out-in" class="card-transition">
+          <CardFrame :key="currentIndex" :memory="currentMemory" />
+        </transition>
+        <button
+          class="card-nav-arrow card-nav-arrow-right"
+          :aria-label="isLast ? '특별한 이야기 보기' : '다음'"
+          @click="isLast ? goToEvent() : next()"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
+      </div>
 
       <div class="card-indicator">
         <span
@@ -18,31 +39,6 @@
         />
       </div>
 
-      <div class="card-navigation">
-        <button
-          class="nav-btn prev"
-          :class="{ hidden: currentIndex === 0 }"
-          @click="prev"
-        >
-          이전
-        </button>
-
-        <button
-          v-if="!isLast"
-          class="nav-btn next"
-          @click="next"
-        >
-          다음
-        </button>
-
-        <button
-          v-else
-          class="nav-btn event-btn"
-          @click="goToEvent"
-        >
-          특별한 이야기 보기
-        </button>
-      </div>
     </div>
   </div>
 </template>
@@ -159,6 +155,69 @@ function onTouchEnd(e) {
   max-width: 520px;
 }
 
+.card-frame-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.card-transition {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.card-nav-arrow {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  color: rgba(80, 60, 40, 0.9);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.card-nav-arrow:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.card-nav-arrow.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.card-nav-arrow svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 560px) {
+  .card-frame-wrapper {
+    gap: 8px;
+  }
+
+  .card-nav-arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .card-nav-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
 .card-indicator {
   display: flex;
   justify-content: center;
@@ -177,67 +236,6 @@ function onTouchEnd(e) {
 .dot.active {
   background: #c8956c;
   transform: scale(1.3);
-}
-
-.card-navigation {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.nav-btn {
-  padding: 0.75rem 2rem;
-  border: none;
-  border-radius: 50px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: inherit;
-}
-
-.nav-btn.prev {
-  background: rgba(200, 170, 130, 0.15);
-  color: #8b6f5c;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(200, 170, 130, 0.3);
-}
-
-.nav-btn.prev:hover {
-  background: rgba(200, 170, 130, 0.25);
-}
-
-.nav-btn.prev.hidden {
-  visibility: hidden;
-}
-
-.nav-btn.next {
-  background: #fff;
-  color: #5c4a3d;
-  border: 1px solid rgba(200, 170, 130, 0.3);
-}
-
-.nav-btn.next:hover {
-  background: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.nav-btn.event-btn {
-  background: linear-gradient(135deg, #e8c170, #d4a04a);
-  color: #fff;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.nav-btn.event-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(212, 160, 74, 0.4);
-}
-
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 160, 74, 0.4); }
-  50% { box-shadow: 0 0 0 10px rgba(212, 160, 74, 0); }
 }
 
 /* Slide transitions */
@@ -269,11 +267,6 @@ function onTouchEnd(e) {
 @media (max-width: 480px) {
   .card-news {
     padding: 1rem 0.8rem;
-  }
-
-  .nav-btn {
-    padding: 0.7rem 1.5rem;
-    font-size: 0.9rem;
   }
 }
 </style>

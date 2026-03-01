@@ -11,8 +11,16 @@
           <path d="M15 18l-6-6 6-6"/>
         </svg>
       </button>
-      <div class="card-image" :style="{ backgroundImage: `url(${currentImage})` }">
-        <div class="card-image-placeholder" v-if="!hasImage">
+      <div class="card-image">
+        <img
+          v-if="currentImage"
+          :src="currentImage"
+          class="card-image-img"
+          alt=""
+          @load="hasImage = true"
+          @error="hasImage = false"
+        >
+        <div v-else class="card-image-placeholder">
           <span>📷</span>
           <p>사진을 추가해주세요</p>
         </div>
@@ -42,9 +50,8 @@
       </div>
     </div>
     <div v-if="memory.date || memory.place" class="card-meta">
-      <span class="card-date">{{ memory.date }}</span>
-      <span v-if="memory.date && memory.place" class="card-divider">·</span>
-      <span class="card-place">{{ memory.place }}</span>
+      <div v-if="memory.date" class="card-date-line">날짜: {{ memory.date }}</div>
+      <div v-if="memory.place" class="card-place-line">{{ memory.place }}</div>
     </div>
   </div>
 </template>
@@ -79,12 +86,8 @@ const hasImage = ref(false)
 
 watch(
   () => currentImage.value,
-  (src) => {
-    if (!src) return
-    const img = new Image()
-    img.onload = () => (hasImage.value = true)
-    img.onerror = () => (hasImage.value = false)
-    img.src = src
+  () => {
+    hasImage.value = false
   },
   { immediate: true }
 )
@@ -98,6 +101,8 @@ watch(
 
 <style scoped>
 .card-frame {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 520px;
   margin: 0 auto;
@@ -109,20 +114,30 @@ watch(
 
 .card-image-wrapper {
   width: 100%;
-  aspect-ratio: 3 / 4;
   overflow: hidden;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e6e2d5;
+  min-height: 120px;
 }
 
 .card-image {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  background-color: #f5efe3;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.card-image-img {
+  max-width: 100%;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  vertical-align: bottom;
 }
 
 .card-image-placeholder {
@@ -215,14 +230,18 @@ watch(
 }
 
 .card-meta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
   padding: 1rem 1.5rem;
   font-size: 0.9rem;
   color: #8b6f5c;
   background: rgba(255, 255, 255, 0.98);
+}
+
+.card-date-line {
+  margin-bottom: 0.35rem;
+}
+
+.card-place-line {
+  line-height: 1.45;
 }
 
 @media (max-width: 520px) {
