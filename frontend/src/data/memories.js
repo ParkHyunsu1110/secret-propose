@@ -6,11 +6,7 @@ export const memories = [
     title: '우리의 첫 만남',
     description:
       '자기랑 처음 만난 날, 그렇게 떨릴 수가 없더라ㅎㅎ 그래서 그런지 심장도 터지는 줄 알았어ㅎㅎㅎ',
-    images: [
-      'https://picsum.photos/400/300?random=1',
-      'https://picsum.photos/400/300?random=2',
-      'https://picsum.photos/400/300?random=3',
-    ],
+    images: ['/images/memory-001.jpg', '/images/memory-002.jpg', '/images/memory-003.jpg'],
   },
   {
     id: 2,

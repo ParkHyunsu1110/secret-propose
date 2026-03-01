@@ -130,7 +130,8 @@ frontend/                    # Vue 프로젝트 루트
 
 - **형식**: 파일명 또는 전체 URL을 쉼표로 구분
 - **파일명** (예: `memory-1a.jpg`): `/images/` 접두사 자동 추가
-- **전체 URL** (`http`로 시작): 그대로 사용 (테스트용 picsum 등)
+- **전체 URL** (`http`로 시작): 그대로 사용
+- **폴백 데이터**: `memories.js`는 API 실패 시 사용되며, picsum 대신 프로젝트 이미지(`/images/memory-001.jpg` 등) 사용
 
 ### API 연동 상세
 
