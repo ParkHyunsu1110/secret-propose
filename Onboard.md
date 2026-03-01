@@ -63,7 +63,7 @@ frontend/                # Vue 3 + Vite (SPA)
 ### 프론트엔드 실행
 - **명령어**: `cd frontend && npm run dev`
 - **포트**: 5173 (기본)
-- **확인 URL**: `http://localhost:5173/` (카드 뉴스), `http://localhost:5173/event` (이벤트), `http://localhost:5173/celebration` (축하)
+- **확인 URL**: `http://localhost:5173/` (초기 화면), `http://localhost:5173/cards` (카드 뉴스), `http://localhost:5173/event` (이벤트), `http://localhost:5173/celebration` (축하)
 - **모바일 확인**: `host: true` 설정으로 같은 Wi-Fi 내 모바일 접속 가능
 
 ### 콘텐츠 저장 방식
@@ -89,7 +89,7 @@ frontend/                # Vue 3 + Vite (SPA)
 | 항목 | 상태 |
 | --- | --- |
 | Vue 3 + Vite 프로젝트 세팅 | ✅ 완료 |
-| Vue Router 설정 (`/` → 카드 뉴스, `/event` → 이벤트) | ✅ 완료 |
+| Vue Router 설정 (`/` → 초기 화면, `/cards` → 카드 뉴스, `/event` → 이벤트) | ✅ 완료 |
 | 카드 뉴스 페이지 (CardNewsView + CardFrame) | ✅ 완료 (더미 데이터) |
 | 이벤트 페이지 (편지 + 배경 음악 + 프로포즈) | ✅ 완료 (더미 내용) |
 | "아니요" 버튼 도망 로직 (PC 호버 + 모바일 터치) | ✅ 완료 |
@@ -100,7 +100,7 @@ frontend/                # Vue 3 + Vite (SPA)
 | 배경 음악 전역화 (페이지 전환 시 끊김 방지) | ✅ 완료 |
 | 카드 뉴스 스와이프 제스처 (모바일 좌우 스와이프) | ✅ 완료 |
 | OG 메타 태그 + Favicon (링크 공유 미리보기) | ✅ 완료 |
-| 404 리다이렉트 (잘못된 경로 → 카드 뉴스) | ✅ 완료 |
+| 404 리다이렉트 (잘못된 경로 → 초기 화면) | ✅ 완료 |
 | API 연동 모듈 (api/index.js — 서버 API 호출) | ✅ 완료 |
 | CardNewsView API 연동 (로컬 폴백 포함) | ✅ 완료 |
 | LetterContent API 연동 (인사말/본문/맺음말 동적) | ✅ 완료 |
@@ -118,6 +118,8 @@ frontend/                # Vue 3 + Vite (SPA)
 | memories.js 폴백 데이터 picsum → 프로젝트 이미지로 수정 (Vercel 배포 시 랜덤 사진 이슈 해결) | ✅ 완료 |
 | 카드 뉴스 사진 영역만 표시 (날짜/제목/설명 영역 숨김) | ✅ 완료 |
 | 카드 1개 + 사진 87장 구조 (TextGuide `1-87` 범위, generate-data 확장, memories.js 폴백) | ✅ 완료 |
+| 초기 화면 (IntroView, "당신을 위해 준비했어요" + 시작하기 → /cards) | ✅ 완료 |
+| 카드 뉴스 UI 개선 (사진 wrap_content, 뒷배경 #e6e2d5, 내비 버튼 사진 바깥 배치, 문구 영역 날짜/장소 세로 정렬) | ✅ 완료 |
 
 ### 카드 뉴스 다중 사진 UI 규칙
 
