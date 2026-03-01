@@ -70,7 +70,9 @@ frontend/                # Vue 3 + Vite (SPA)
 - **사진/음악**: `frontend/public/` 폴더 (정적 파일, Vercel CDN 서빙)
 - **텍스트 (카드 뉴스, 편지)**: `TextGuide.md` 작성 → `npm run generate:data` → `data.sql` 생성 → H2 DB
 - **이벤트 로그 (수락, 방문)**: H2 DB (영구 저장)
-- **이미지 파일명 규칙**: `memory-{번호}.jpg` 또는 TextGuide `- 사진:` 필드에 쉼표 구분 다중 지정. DB `image_path`에 JSON 배열 저장
+- **이미지 파일명 규칙**: `memory-001.jpg`, `memory-002.jpg` ... (3자리 0 패딩). TextGuide `- 사진:` 필드로 다중 지정 가능. DB `image_path`에 JSON 배열 저장
+- **이미지 변환 스크립트**: `scripts/convert-images.js` — HEIC/PNG→JPG 변환(`convert`), memory-N→memory-NNN 이름 변경(`rename`)
+- **배포 워크플로우 ("배포해")**: TextGuide 반영 → main 병합 → `./deploy.sh` → `git push main` (Vercel 트리거)
 
 ### 초기 구성 (main 브랜치)
 - TestController: `GET /api/test` API
@@ -110,6 +112,15 @@ frontend/                # Vue 3 + Vite (SPA)
 | 음악 없어도 편지 화면 정상 진입 | ✅ 완료 |
 | TextGuide.md + generate-data.js (콘텐츠 파싱 → data.sql) | ✅ 완료 |
 | 카드 뉴스 다중 사진 (인디케이터, 좌우 화살표) | ✅ 완료 |
+| API 응답 코드 검증 수정 (0000) | ✅ 완료 |
+| 이미지 변환 스크립트 (HEIC→JPG, memory-NNN 형식) | ✅ 완료 |
+| 추억 사진 실제 파일 추가 (87장, memory-001~087.jpg) | ✅ 완료 |
+
+### 카드 뉴스 다중 사진 UI 규칙
+
+- **사진 1장**: 좌우 버튼·점 인디케이터 모두 숨김
+- **사진 2장 이상**: 점 인디케이터 표시. 좌측 버튼은 첫 사진이 아닐 때만, 우측 버튼은 마지막 사진이 아닐 때만 표시
+- **API 응답 코드**: 서버 `ResultCode.SUCCESS.code`는 `"0000"`. 프론트엔드 `api/index.js`에서 `json.code === '0000'`으로 검증
 
 ### feature/server - 백엔드 (Kotlin + Spring Boot)
 
