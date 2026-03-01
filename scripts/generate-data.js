@@ -5,14 +5,15 @@
  * 실행: npm run generate:data (프로젝트 루트에서)
  */
 
-import { readFileSync, writeFileSync } from 'fs'
+import { readFileSync, writeFileSync, mkdirSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const TEXT_GUIDE = join(ROOT, 'TextGuide.md')
-const OUTPUT = join(ROOT, 'src', 'main', 'resources', 'data.sql')
+const OUTPUT_SQL = join(ROOT, 'src', 'main', 'resources', 'data.sql')
+const OUTPUT_JSON = join(ROOT, 'frontend', 'public', 'data', 'card-news.json')
 
 function escapeSql(str) {
   if (!str || typeof str !== 'string') return "''"
@@ -123,6 +124,21 @@ function generateSql({ memories, letter }) {
   return lines.join('\n')
 }
 
+function generateJson({ memories }) {
+  return JSON.stringify(
+    memories.map((m) => ({
+      id: m.id,
+      date: m.date,
+      place: m.place,
+      title: m.title,
+      description: m.description,
+      images: JSON.parse(m.imagePath),
+    })),
+    null,
+    2
+  )
+}
+
 function main() {
   let content
   try {
@@ -134,10 +150,14 @@ function main() {
 
   const parsed = parseTextGuide(content)
   const sql = generateSql(parsed)
+  const json = generateJson(parsed)
 
   try {
-    writeFileSync(OUTPUT, sql, 'utf-8')
-    console.log('✓ data.sql 생성 완료:', OUTPUT)
+    writeFileSync(OUTPUT_SQL, sql, 'utf-8')
+    mkdirSync(join(OUTPUT_JSON, '..'), { recursive: true })
+    writeFileSync(OUTPUT_JSON, json, 'utf-8')
+    console.log('✓ data.sql 생성 완료:', OUTPUT_SQL)
+    console.log('✓ card-news.json 생성 완료:', OUTPUT_JSON)
     console.log('  - 카드 뉴스:', parsed.memories.length, '개')
     console.log('  - 편지 문단:', parsed.letter.paragraphs.length, '개')
   } catch (e) {

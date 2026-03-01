@@ -85,7 +85,20 @@ onMounted(async () => {
       }))
     }
   } catch {
-    /* fallback to local data */
+    try {
+      const res = await fetch('/data/card-news.json')
+      if (res.ok) {
+        const data = await res.json()
+        if (Array.isArray(data) && data.length) {
+          memories.value = data.map((m) => ({
+            ...m,
+            images: parseImages(m.imagePath || m.image || m.images),
+          }))
+        }
+      }
+    } catch {
+      /* fallback to memories.js */
+    }
   }
   memories.value = memories.value.map((m) => ({
     ...m,
