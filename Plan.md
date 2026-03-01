@@ -119,6 +119,24 @@ frontend/                    # Vue 프로젝트 루트
 - [x] TextGuide.md + generate-data.js (콘텐츠 파싱 → data.sql 자동 생성)
 - [x] 카드 뉴스 다중 사진 (인디케이터, 좌우 화살표, TextGuide `- 사진:` 필드)
 
+### 카드 뉴스 다중 사진 상세
+
+| 조건 | 좌측 버튼 | 우측 버튼 | 점 인디케이터 |
+| --- | --- | --- | --- |
+| 사진 1장 | 숨김 | 숨김 | 숨김 |
+| 사진 2장 이상 | 첫 사진이 아니면 표시 | 마지막이 아니면 표시 | 표시 |
+
+### TextGuide `- 사진:` 필드 상세
+
+- **형식**: 파일명 또는 전체 URL을 쉼표로 구분
+- **파일명** (예: `memory-1a.jpg`): `/images/` 접두사 자동 추가
+- **전체 URL** (`http`로 시작): 그대로 사용 (테스트용 picsum 등)
+
+### API 연동 상세
+
+- **서버 응답 코드**: `code: "0000"` (ResultCode.SUCCESS)
+- **프론트엔드 검증**: `api/index.js`에서 `json.code !== '0000'`이면 에러 처리, 폴백 데이터 사용
+
 ---
 
 ## 서버 개발 계획 (Kotlin + Spring Boot)
@@ -211,16 +229,15 @@ frontend/                    # Vue 프로젝트 루트
 ```
 frontend/public/
 ├── images/
-│   ├── memory-1.jpg          # 추억 사진 (카드 뉴스용)
-│   ├── memory-2.jpg
-│   ├── memory-3.jpg
+│   ├── memory-001.jpg        # 추억 사진 (카드 뉴스용, 3자리 0패딩)
+│   ├── memory-002.jpg
 │   ├── ...
 │   └── og-thumbnail.png      # 링크 공유 시 미리보기 썸네일
 └── music/
     └── bgm.mp3               # 이벤트 페이지 배경 음악
 ```
 
-- 이미지 파일명: `memory-{번호}.jpg` 또는 TextGuide `- 사진:` 필드에 쉼표 구분. DB `image_path`에 JSON 배열 저장
+- 이미지 파일명: `memory-001.jpg` 형식 (3자리 0패딩). 변환: `scripts/convert-images.js convert` (HEIC→JPG), `rename` (memory-NNN)
 - 프론트엔드에서 이미지 접근: Vercel 정적 서빙 (`https://도메인/images/memory-1.jpg`)
 - 사진은 Git 레포에 포함되며, push 시 Vercel에 자동 배포
 
@@ -230,9 +247,16 @@ frontend/public/
 
 **워크플로우**: TextGuide.md 수정 → `npm run generate:data` → data.sql 생성 → 서버 빌드/배포
 
+### 배포 워크플로우 ("배포해")
+
+1. `npm run generate:data` — TextGuide 내용을 data.sql로 반영
+2. main 브랜치에 feature 병합 (squash merge)
+3. `./deploy.sh` — 서버 JAR 빌드·전송·재시작
+4. `git push origin main` — Vercel 자동 배포 트리거
+
 ### 준비물 체크리스트
 
-- [ ] 추억 사진 파일 (`memory-1.jpg`, `memory-2.jpg`, ...) → `frontend/public/images/`에 추가
+- [x] 추억 사진 파일 (`memory-001.jpg`~`memory-087.jpg`) → `frontend/public/images/`에 추가
 - [ ] 배경 음악 파일 (`bgm.mp3`) → `frontend/public/music/`에 추가 (선택)
 - [ ] OG 썸네일 이미지 (`og-thumbnail.png`) → `frontend/public/images/`에 추가
 - [ ] TextGuide.md에 카드 뉴스·편지 내용 작성 후 `npm run generate:data` 실행

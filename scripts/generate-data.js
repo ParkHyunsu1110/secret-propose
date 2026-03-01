@@ -35,8 +35,11 @@ function parseTextGuide(content) {
       const desc = descMatch?.[1]?.trim()?.replace(/\n\s*/g, ' ') || ''
       const photoMatch = block.match(/- 사진:\s*(.+?)(?:\n|$)/)?.[1]?.trim()
       const imagePaths = photoMatch
-        ? photoMatch.split(/[,，]/).map((f) => `/images/${f.trim()}`).filter(Boolean)
-        : [`/images/memory-${num}.jpg`]
+        ? photoMatch.split(/[,，]/).map((f) => {
+            const s = f.trim()
+            return s.startsWith('http') ? s : `/images/${s}`
+          }).filter(Boolean)
+        : [`/images/memory-${String(num).padStart(3, '0')}.jpg`]
       if (date || place || title || desc) {
         memories.push({
           id: parseInt(num, 10),
