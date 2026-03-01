@@ -7,7 +7,9 @@
         aria-label="이전 사진"
         @click.prevent="imageIndex--"
       >
-        ‹
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
       </button>
       <div class="card-image" :style="{ backgroundImage: `url(${currentImage})` }">
         <div class="card-image-placeholder" v-if="!hasImage">
@@ -21,7 +23,9 @@
         aria-label="다음 사진"
         @click.prevent="imageIndex++"
       >
-        ›
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
       </button>
       <div v-if="images.length > 1" class="card-image-dots">
         <span
@@ -141,18 +145,23 @@ watch(
   z-index: 2;
   width: 36px;
   height: 36px;
+  padding: 0;
   border: none;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(6px);
   color: rgba(80, 60, 40, 0.9);
-  font-size: 1.4rem;
-  line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background 0.2s;
+}
+
+.card-arrow svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 .card-arrow:hover {
