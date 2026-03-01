@@ -47,7 +47,12 @@ function parseTextGuide(content) {
         } else {
           imagePaths = trimmed.split(/[,，]/).map((f) => {
             const s = f.trim()
-            return s.startsWith('http') ? s : (s.includes('/') ? s : `/images/${s}`)
+            if (s.startsWith('http')) return s
+            if (s.includes('/')) return s
+            const n = parseInt(s, 10)
+            if (!Number.isNaN(n)) return `/images/memory-${String(n).padStart(3, '0')}.jpg`
+            const path = s.startsWith('memory-') && !s.endsWith('.jpg') ? `${s}.jpg` : s
+            return `/images/${path}`
           }).filter(Boolean)
         }
       } else {

@@ -143,7 +143,7 @@ function onTouchEnd(e) {
 
 .card-news-container {
   width: 100%;
-  max-width: 420px;
+  max-width: 520px;
 }
 
 .card-indicator {

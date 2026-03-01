@@ -28,15 +28,24 @@
         </svg>
       </button>
       <div v-if="images.length > 1" class="card-image-dots">
-        <span
-          v-for="(_, i) in images"
-          :key="i"
-          class="card-image-dot"
-          :class="{ active: i === imageIndex }"
-        />
+        <template v-if="images.length <= 20">
+          <span
+            v-for="(_, i) in images"
+            :key="i"
+            class="card-image-dot"
+            :class="{ active: i === imageIndex }"
+          />
+        </template>
+        <span v-else class="card-image-counter">
+          {{ imageIndex + 1 }} / {{ images.length }}
+        </span>
       </div>
     </div>
-    <!-- 카드 텍스트(날짜/제목/설명) 숨김, 사진 영역만 표시 -->
+    <div v-if="memory.date || memory.place" class="card-meta">
+      <span class="card-date">{{ memory.date }}</span>
+      <span v-if="memory.date && memory.place" class="card-divider">·</span>
+      <span class="card-place">{{ memory.place }}</span>
+    </div>
   </div>
 </template>
 
@@ -90,7 +99,7 @@ watch(
 <style scoped>
 .card-frame {
   width: 100%;
-  max-width: 420px;
+  max-width: 520px;
   margin: 0 auto;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
@@ -100,7 +109,7 @@ watch(
 
 .card-image-wrapper {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
   position: relative;
 }
@@ -170,73 +179,61 @@ watch(
 
 .card-image-dots {
   position: absolute;
-  bottom: 10px;
+  bottom: 14px;
   left: 0;
   right: 0;
   display: flex;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   z-index: 2;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  margin: 0 12px;
+  border-radius: 20px;
 }
 
 .card-image-dot {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.5);
   transition: all 0.2s;
 }
 
 .card-image-dot.active {
-  background: rgba(255, 255, 255, 0.95);
-  transform: scale(1.2);
+  background: #fff;
+  transform: scale(1.25);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
-.card-content {
-  padding: 1.8rem 1.5rem;
+.card-image-counter {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .card-meta {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
-  font-size: 0.85rem;
-  color: #b09a7e;
-  margin-bottom: 0.8rem;
+  padding: 1rem 1.5rem;
+  font-size: 0.9rem;
+  color: #8b6f5c;
+  background: rgba(255, 255, 255, 0.98);
 }
 
-.card-title {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #4a3728;
-  margin: 0 0 0.8rem 0;
-  line-height: 1.3;
-}
-
-.card-description {
-  font-size: 0.95rem;
-  color: #6b5c4a;
-  line-height: 1.7;
-  margin: 0;
-  word-break: keep-all;
-}
-
-@media (max-width: 480px) {
+@media (max-width: 520px) {
   .card-frame {
     max-width: 100%;
     border-radius: 16px;
   }
 
-  .card-content {
-    padding: 1.4rem 1.2rem;
-  }
-
-  .card-title {
-    font-size: 1.2rem;
-  }
-
-  .card-description {
-    font-size: 0.9rem;
+  .card-meta {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.85rem;
   }
 }
 </style>
