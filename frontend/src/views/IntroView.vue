@@ -12,10 +12,14 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useMusic } from '@/composables/useMusic.js'
 
 const router = useRouter()
+const { play } = useMusic()
 
 function goToCards() {
+  // 사용자 클릭 제스처로 재생을 보장해 페이지 이동 후에도 음악이 이어지게 한다.
+  play().catch(() => {})
   router.push('/cards')
 }
 

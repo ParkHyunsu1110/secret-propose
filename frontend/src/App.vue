@@ -6,8 +6,10 @@
   </router-view>
 
   <transition name="fade">
-    <button v-if="isPlaying" class="music-toggle" @click="toggleMusic" :aria-label="isPlaying ? '음악 끄기' : '음악 켜기'">
-      <span class="music-icon" :class="{ paused: !isPlaying }">♪</span>
+    <button class="music-toggle" @click="toggleMusic" :aria-label="isPlaying ? '음악 끄기' : '음악 켜기'">
+      <span class="music-icon" :class="{ paused: !isPlaying }">
+        {{ isPlaying ? '♪' : '♫' }}
+      </span>
     </button>
   </transition>
 </template>
