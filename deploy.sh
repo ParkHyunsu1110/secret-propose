@@ -19,7 +19,7 @@ echo "=== 3. JAR 전송 ==="
 scp $SSH_OPTS -i $SSH_KEY $JAR_PATH $SSH_USER@$SERVER_IP:$REMOTE_DIR/$JAR_NAME
 
 echo "=== 4. 기존 프로세스 종료 ==="
-ssh $SSH_OPTS -i $SSH_KEY $SSH_USER@$SERVER_IP "pkill -f '$JAR_NAME' 2>/dev/null || true"
+ssh $SSH_OPTS -i $SSH_KEY $SSH_USER@$SERVER_IP "PIDS=\$(pgrep -f \"java .*${JAR_NAME}\" || true); if [ -n \"\$PIDS\" ]; then kill \$PIDS || true; fi"
 sleep 2
 
 echo "=== 5. 애플리케이션 시작 ==="
