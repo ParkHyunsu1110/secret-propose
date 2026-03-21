@@ -12,14 +12,18 @@
         </svg>
       </button>
       <div class="card-image">
-        <img
-          v-if="currentImage"
-          :src="currentImage"
-          class="card-image-img"
-          alt=""
-          @load="hasImage = true"
-          @error="hasImage = false"
-        >
+        <picture v-if="currentImage">
+          <source :srcset="toWebp(currentImage)" type="image/webp">
+          <img
+            :src="currentImage"
+            class="card-image-img"
+            alt=""
+            decoding="async"
+            fetchpriority="high"
+            @load="hasImage = true"
+            @error="hasImage = false"
+          >
+        </picture>
         <div v-else class="card-image-placeholder">
           <span>📷</span>
           <p>사진을 추가해주세요</p>
@@ -82,6 +86,10 @@ const images = computed(() => {
 const imageIndex = ref(0)
 const currentImage = computed(() => images.value[imageIndex.value] || '')
 
+function toWebp(src) {
+  return src?.replace(/\.jpg$/i, '.webp') || src
+}
+
 const hasImage = ref(false)
 
 watch(
@@ -127,6 +135,12 @@ watch(
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+}
+
+.card-image picture {
+  display: flex;
+  justify-content: center;
   width: 100%;
 }
 

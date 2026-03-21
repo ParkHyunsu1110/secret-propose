@@ -106,7 +106,7 @@ function onYes() {
 
 .letter-section {
   width: 100%;
-  max-width: 480px;
+  max-width: 700px;
 }
 
 .proposal-section {

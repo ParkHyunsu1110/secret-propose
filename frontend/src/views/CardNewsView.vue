@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import CardFrame from '@/components/CardFrame.vue'
 import { memories as fallbackMemories } from '@/data/memories.js'
@@ -69,6 +69,32 @@ const memories = ref(fallbackMemories)
 
 const currentMemory = computed(() => memories.value[currentIndex.value])
 const isLast = computed(() => currentIndex.value === memories.value.length - 1)
+const preloaded = new Set()
+
+function preferredImageSrc(src) {
+  return src?.replace(/\.jpg$/i, '.webp') || src
+}
+
+function preloadMemoryImages(index) {
+  const memory = memories.value[index]
+  if (!memory?.images?.length) return
+  for (const rawSrc of memory.images) {
+    const src = preferredImageSrc(rawSrc)
+    if (!src || preloaded.has(src)) continue
+    const img = new Image()
+    img.decoding = 'async'
+    img.src = src
+    preloaded.add(src)
+  }
+}
+
+function preloadAroundCurrent() {
+  const i = currentIndex.value
+  // 현재/다음/다다음 카드를 미리 로드해 넘길 때 체감 지연을 줄인다.
+  preloadMemoryImages(i)
+  preloadMemoryImages(i + 1)
+  preloadMemoryImages(i + 2)
+}
 
 onMounted(async () => {
   recordVisit('card-news').catch(() => {})
@@ -100,6 +126,11 @@ onMounted(async () => {
     ...m,
     images: m.images || parseImages(m.imagePath || m.image),
   }))
+  preloadAroundCurrent()
+})
+
+watch(currentIndex, () => {
+  preloadAroundCurrent()
 })
 
 function next() {

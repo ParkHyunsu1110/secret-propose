@@ -19,7 +19,7 @@
       </transition>
 
       <transition name="fade-up-slow">
-        <p v-if="phase >= 4" class="date-text">{{ todayFormatted }}</p>
+        <p v-if="phase >= 4" class="date-text">2026.04.05</p>
       </transition>
     </div>
   </div>
@@ -44,14 +44,6 @@ const HEART_COLORS = [
 const SPARKLE_COLORS = [
   '#ffd700', '#f5c842', '#e8b830', '#f0d060',
 ]
-
-const todayFormatted = computed(() => {
-  const d = new Date()
-  const y = d.getFullYear()
-  const m = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return `${y}.${m}.${day}`
-})
 
 class Particle {
   constructor(canvas, type) {

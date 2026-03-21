@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+import sharp from 'sharp'
+import { readdirSync } from 'fs'
+import { join, extname, basename, dirname } from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const IMAGES_DIR = join(__dirname, '..', 'frontend', 'public', 'images')
+
+async function main() {
+  const files = readdirSync(IMAGES_DIR)
+    .filter((f) => extname(f).toLowerCase() === '.jpg' && f.startsWith('memory-'))
+    .sort()
+
+  let converted = 0
+  for (const file of files) {
+    const input = join(IMAGES_DIR, file)
+    const output = join(IMAGES_DIR, `${basename(file, '.jpg')}.webp`)
+    await sharp(input).webp({ quality: 72 }).toFile(output)
+    converted += 1
+  }
+
+  console.log(`✓ WebP 생성 완료: ${converted}개`)
+}
+
+main().catch((e) => {
+  console.error('WebP 생성 실패:', e.message)
+  process.exit(1)
+})

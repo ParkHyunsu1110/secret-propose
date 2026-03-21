@@ -42,7 +42,7 @@ onMounted(async () => {
 <style scoped>
 .letter {
   width: 100%;
-  max-width: 480px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
@@ -83,7 +83,8 @@ onMounted(async () => {
   line-height: 2;
   margin: 0 0 1.4rem 0;
   word-break: keep-all;
-  text-indent: 0.5rem;
+  white-space: pre-line;
+  text-align: center;
 }
 
 .letter-closing {
