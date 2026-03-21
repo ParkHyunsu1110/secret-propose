@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoading" class="letter">
+  <div class="letter">
     <div class="letter-paper">
       <p class="letter-greeting">{{ greeting }}</p>
       <div class="letter-body">
@@ -13,8 +13,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { fetchLetter } from '@/api/index.js'
+import { ref } from 'vue'
 
 const DEFAULT_GREETING = '사랑하는 당신에게'
 const DEFAULT_CLOSING = '영원히 사랑하는, 당신의 사람으로부터'
@@ -25,25 +24,9 @@ const DEFAULT_PARAGRAPHS = [
   '그래서 오늘, 용기를 내어 물어보려 해.',
 ]
 
-const isLoading = ref(true)
-const greeting = ref('')
-const closing = ref('')
-const paragraphs = ref([])
-
-onMounted(async () => {
-  try {
-    const data = await fetchLetter()
-    greeting.value = data?.greeting || DEFAULT_GREETING
-    closing.value = data?.closing || DEFAULT_CLOSING
-    paragraphs.value = data?.paragraphs?.length ? data.paragraphs : DEFAULT_PARAGRAPHS
-  } catch {
-    greeting.value = DEFAULT_GREETING
-    closing.value = DEFAULT_CLOSING
-    paragraphs.value = DEFAULT_PARAGRAPHS
-  } finally {
-    isLoading.value = false
-  }
-})
+const greeting = ref(DEFAULT_GREETING)
+const closing = ref(DEFAULT_CLOSING)
+const paragraphs = ref(DEFAULT_PARAGRAPHS)
 </script>
 
 <style scoped>

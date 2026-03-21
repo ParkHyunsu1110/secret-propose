@@ -48,7 +48,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import CardFrame from '@/components/CardFrame.vue'
-import { fetchMemories, recordVisit } from '@/api/index.js'
+import { recordVisit } from '@/api/index.js'
 
 function parseImages(raw) {
   if (Array.isArray(raw)) return raw
@@ -99,28 +99,18 @@ function preloadAroundCurrent() {
 onMounted(async () => {
   recordVisit('card-news').catch(() => {})
   try {
-    const data = await fetchMemories()
-    if (data?.length) {
-      memories.value = data.map((m) => ({
-        ...m,
-        images: parseImages(m.imagePath || m.image || m.images),
-      }))
+    const res = await fetch('/data/card-news.json')
+    if (res.ok) {
+      const data = await res.json()
+      if (Array.isArray(data) && data.length) {
+        memories.value = data.map((m) => ({
+          ...m,
+          images: parseImages(m.imagePath || m.image || m.images),
+        }))
+      }
     }
   } catch {
-    try {
-      const res = await fetch('/data/card-news.json')
-      if (res.ok) {
-        const data = await res.json()
-        if (Array.isArray(data) && data.length) {
-          memories.value = data.map((m) => ({
-            ...m,
-            images: parseImages(m.imagePath || m.image || m.images),
-          }))
-        }
-      }
-    } catch {
-      /* fallback to memories.js */
-    }
+    /* fallback omitted: show loading state if data file is unavailable */
   }
   memories.value = memories.value.map((m) => ({
     ...m,
