@@ -18,16 +18,12 @@ ssh $SSH_OPTS -i $SSH_KEY $SSH_USER@$SERVER_IP "mkdir -p $REMOTE_DIR/data"
 echo "=== 3. JAR 전송 ==="
 scp $SSH_OPTS -i $SSH_KEY $JAR_PATH $SSH_USER@$SERVER_IP:$REMOTE_DIR/$JAR_NAME
 
-echo "=== 4. 기존 프로세스 종료 ==="
-ssh $SSH_OPTS -i $SSH_KEY $SSH_USER@$SERVER_IP "PIDS=\$(pgrep -f \"java .*${JAR_NAME}\" || true); if [ -n \"\$PIDS\" ]; then kill \$PIDS || true; fi"
+echo "=== 4. systemd 서비스 재시작 ==="
+ssh $SSH_OPTS -i $SSH_KEY $SSH_USER@$SERVER_IP "sudo systemctl daemon-reload && sudo systemctl restart secret-propose"
 sleep 2
 
-echo "=== 5. 애플리케이션 시작 ==="
-ssh $SSH_OPTS -i $SSH_KEY $SSH_USER@$SERVER_IP "cd $REMOTE_DIR && nohup java -Xmx256m -jar $JAR_NAME --server.port=8080 > app.log 2>&1 &"
-sleep 3
-
-echo "=== 6. 상태 확인 ==="
-ssh $SSH_OPTS -i $SSH_KEY $SSH_USER@$SERVER_IP "ps aux | grep '$JAR_NAME' | grep -v grep && echo 'APP RUNNING' || echo 'APP NOT RUNNING'"
+echo "=== 5. 상태 확인 ==="
+ssh $SSH_OPTS -i $SSH_KEY $SSH_USER@$SERVER_IP "sudo systemctl is-active secret-propose && sudo systemctl status secret-propose --no-pager -n 20"
 
 echo "=== 배포 완료 ==="
 echo "API: http://$SERVER_IP:8080/api/memories"
