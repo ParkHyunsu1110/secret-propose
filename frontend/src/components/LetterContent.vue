@@ -1,5 +1,5 @@
 <template>
-  <div class="letter">
+  <div v-if="!isLoading" class="letter">
     <div class="letter-paper">
       <p class="letter-greeting">{{ greeting }}</p>
       <div class="letter-body">
@@ -16,25 +16,32 @@
 import { ref, onMounted } from 'vue'
 import { fetchLetter } from '@/api/index.js'
 
-const greeting = ref('사랑하는 당신에게')
-const closing = ref('영원히 사랑하는, 당신의 사람으로부터')
-const paragraphs = ref([
+const DEFAULT_GREETING = '사랑하는 당신에게'
+const DEFAULT_CLOSING = '영원히 사랑하는, 당신의 사람으로부터'
+const DEFAULT_PARAGRAPHS = [
   '우리가 함께한 모든 순간들이 떠올라. 처음 만났던 그 날부터 지금 이 순간까지, 매일이 선물 같았어.',
   '네가 웃을 때마다 세상이 환해지는 것 같고, 네가 내 곁에 있다는 것만으로도 하루가 완벽해져.',
   '앞으로도 우리의 이야기를 함께 써 나가고 싶어. 슬플 때도, 기쁠 때도, 평범한 날에도 항상 네 옆에 있고 싶어.',
   '그래서 오늘, 용기를 내어 물어보려 해.',
-])
+]
+
+const isLoading = ref(true)
+const greeting = ref('')
+const closing = ref('')
+const paragraphs = ref([])
 
 onMounted(async () => {
   try {
     const data = await fetchLetter()
-    if (data) {
-      if (data.greeting) greeting.value = data.greeting
-      if (data.closing) closing.value = data.closing
-      if (data.paragraphs?.length) paragraphs.value = data.paragraphs
-    }
+    greeting.value = data?.greeting || DEFAULT_GREETING
+    closing.value = data?.closing || DEFAULT_CLOSING
+    paragraphs.value = data?.paragraphs?.length ? data.paragraphs : DEFAULT_PARAGRAPHS
   } catch {
-    /* fallback to local data */
+    greeting.value = DEFAULT_GREETING
+    closing.value = DEFAULT_CLOSING
+    paragraphs.value = DEFAULT_PARAGRAPHS
+  } finally {
+    isLoading.value = false
   }
 })
 </script>
