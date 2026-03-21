@@ -32,3 +32,6 @@ logs/
 # H2
 *.db
 *.trace.db
+
+node_modules/
+frontend/public/images-backup/
