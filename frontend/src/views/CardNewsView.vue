@@ -16,9 +16,10 @@
             <path d="M15 18l-6-6 6-6"/>
           </svg>
         </button>
-        <transition :name="transitionName" mode="out-in" class="card-transition">
+        <transition v-if="currentMemory" :name="transitionName" mode="out-in" class="card-transition">
           <CardFrame :key="currentIndex" :memory="currentMemory" />
         </transition>
+        <div v-else class="card-loading card-transition">카드를 불러오는 중...</div>
         <button
           class="card-nav-arrow card-nav-arrow-right"
           :aria-label="isLast ? '특별한 이야기 보기' : '다음'"
@@ -47,7 +48,6 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import CardFrame from '@/components/CardFrame.vue'
-import { memories as fallbackMemories } from '@/data/memories.js'
 import { fetchMemories, recordVisit } from '@/api/index.js'
 
 function parseImages(raw) {
@@ -65,9 +65,9 @@ function parseImages(raw) {
 const router = useRouter()
 const currentIndex = ref(0)
 const transitionName = ref('slide-left')
-const memories = ref(fallbackMemories)
+const memories = ref([])
 
-const currentMemory = computed(() => memories.value[currentIndex.value])
+const currentMemory = computed(() => memories.value[currentIndex.value] || null)
 const isLast = computed(() => currentIndex.value === memories.value.length - 1)
 const preloaded = new Set()
 
@@ -126,6 +126,7 @@ onMounted(async () => {
     ...m,
     images: m.images || parseImages(m.imagePath || m.image),
   }))
+  if (currentIndex.value >= memories.value.length) currentIndex.value = 0
   preloadAroundCurrent()
 })
 
@@ -198,6 +199,18 @@ function onTouchEnd(e) {
   min-width: 0;
   display: flex;
   justify-content: center;
+}
+
+.card-loading {
+  width: 100%;
+  min-height: 420px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8b6f5c;
+  font-size: 0.95rem;
 }
 
 .card-nav-arrow {

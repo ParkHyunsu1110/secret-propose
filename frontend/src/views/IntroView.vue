@@ -10,6 +10,7 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -17,6 +18,48 @@ const router = useRouter()
 function goToCards() {
   router.push('/cards')
 }
+
+function preloadImage(src) {
+  if (!src) return
+  const img = new Image()
+  img.decoding = 'async'
+  img.src = src
+}
+
+function toWebp(src) {
+  return src?.replace(/\.jpg$/i, '.webp') || src
+}
+
+async function preloadInitialCardImages() {
+  try {
+    const res = await fetch('/data/card-news.json')
+    if (!res.ok) throw new Error('no json')
+    const cards = await res.json()
+    if (!Array.isArray(cards)) return
+
+    // 시작 전 체감 개선: 첫 10개 카드 이미지를 우선 로드
+    const firstImages = cards
+      .slice(0, 10)
+      .flatMap((c) => (Array.isArray(c.images) ? c.images : []))
+      .filter(Boolean)
+
+    for (const src of firstImages) {
+      preloadImage(toWebp(src))
+      preloadImage(src)
+    }
+  } catch {
+    // 폴백: 기본 파일명 기준으로 1~10번 이미지 선로딩
+    for (let i = 1; i <= 10; i += 1) {
+      const base = `/images/memory-${String(i).padStart(3, '0')}`
+      preloadImage(`${base}.webp`)
+      preloadImage(`${base}.jpg`)
+    }
+  }
+}
+
+onMounted(() => {
+  preloadInitialCardImages()
+})
 </script>
 
 <style scoped>
