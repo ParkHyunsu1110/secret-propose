@@ -27,7 +27,10 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { recordVisit } from '@/api/index.js'
+
+const route = useRoute()
 
 const canvasRef = ref(null)
 const phase = ref(0)
@@ -179,7 +182,7 @@ function handleResize() {
 }
 
 onMounted(() => {
-  recordVisit('celebration').catch(() => {})
+  recordVisit(route.meta.share ? 'celebration-share' : 'celebration').catch(() => {})
   initCanvas()
   window.addEventListener('resize', handleResize)
 

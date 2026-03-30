@@ -46,9 +46,10 @@
 
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import CardFrame from '@/components/CardFrame.vue'
 import { recordVisit } from '@/api/index.js'
+import { SHARE_MEMORY_IDS_ORDERED } from '@/config/shareMemories.js'
 
 function parseImages(raw) {
   if (Array.isArray(raw)) return raw
@@ -63,6 +64,7 @@ function parseImages(raw) {
 }
 
 const router = useRouter()
+const route = useRoute()
 const currentIndex = ref(0)
 const transitionName = ref('slide-left')
 const memories = ref([])
@@ -97,7 +99,7 @@ function preloadAroundCurrent() {
 }
 
 onMounted(async () => {
-  recordVisit('card-news').catch(() => {})
+  recordVisit(route.meta.share ? 'card-news-share' : 'card-news').catch(() => {})
   try {
     const res = await fetch('/data/card-news.json')
     if (res.ok) {
@@ -116,6 +118,10 @@ onMounted(async () => {
     ...m,
     images: m.images || parseImages(m.imagePath || m.image),
   }))
+  if (route.meta.share) {
+    const byId = new Map(memories.value.map((m) => [m.id, m]))
+    memories.value = SHARE_MEMORY_IDS_ORDERED.map((id) => byId.get(id)).filter(Boolean)
+  }
   if (currentIndex.value >= memories.value.length) currentIndex.value = 0
   preloadAroundCurrent()
 })
@@ -139,7 +145,7 @@ function prev() {
 }
 
 function goToEvent() {
-  router.push('/event')
+  router.push(route.meta.share ? '/share/event' : '/event')
 }
 
 const SWIPE_THRESHOLD = 50

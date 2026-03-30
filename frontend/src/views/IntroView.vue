@@ -11,16 +11,18 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useMusic } from '@/composables/useMusic.js'
+import { SHARE_MEMORY_IDS_ORDERED } from '@/config/shareMemories.js'
 
 const router = useRouter()
+const route = useRoute()
 const { play } = useMusic()
 
 function goToCards() {
   // 사용자 클릭 제스처로 재생을 보장해 페이지 이동 후에도 음악이 이어지게 한다.
   play().catch(() => {})
-  router.push('/cards')
+  router.push(route.meta.share ? '/share/cards' : '/cards')
 }
 
 function preloadImage(src) {
@@ -41,8 +43,13 @@ async function preloadInitialCardImages() {
     const cards = await res.json()
     if (!Array.isArray(cards)) return
 
+    const share = route.meta.share === true
+    const ordered = share
+      ? SHARE_MEMORY_IDS_ORDERED.map((id) => cards.find((c) => c.id === id)).filter(Boolean)
+      : cards
+
     // 시작 전 체감 개선: 첫 10개 카드 이미지를 우선 로드
-    const firstImages = cards
+    const firstImages = ordered
       .slice(0, 10)
       .flatMap((c) => (Array.isArray(c.images) ? c.images : []))
       .filter(Boolean)
@@ -52,9 +59,12 @@ async function preloadInitialCardImages() {
       preloadImage(src)
     }
   } catch {
-    // 폴백: 기본 파일명 기준으로 1~10번 이미지 선로딩
-    for (let i = 1; i <= 10; i += 1) {
-      const base = `/images/memory-${String(i).padStart(3, '0')}`
+    // 폴백: json 실패 시 파일명 기준 선로딩 (share는 목록 앞 10개 id)
+    const ids = route.meta.share
+      ? SHARE_MEMORY_IDS_ORDERED.slice(0, 10)
+      : Array.from({ length: 10 }, (_, i) => i + 1)
+    for (const id of ids) {
+      const base = `/images/memory-${String(id).padStart(3, '0')}`
       preloadImage(`${base}.webp`)
       preloadImage(`${base}.jpg`)
     }

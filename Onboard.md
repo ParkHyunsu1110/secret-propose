@@ -64,6 +64,7 @@ frontend/                # Vue 3 + Vite (SPA)
 - **명령어**: `cd frontend && npm run dev`
 - **포트**: 5173 (기본)
 - **확인 URL**: `http://localhost:5173/` (초기 화면), `http://localhost:5173/cards` (카드 뉴스), `http://localhost:5173/event` (이벤트), `http://localhost:5173/celebration` (축하)
+- **공유용 URL** (`/share` 하위, 카드만 일부 id로 필터, 편지·이벤트·축하는 동일 컴포넌트): `/share` → `/share/cards` → `/share/event` → `/share/celebration`. 필터 id 목록은 `frontend/src/config/shareMemories.js`
 - **모바일 확인**: `host: true` 설정으로 같은 Wi-Fi 내 모바일 접속 가능
 
 ### 콘텐츠 저장 방식

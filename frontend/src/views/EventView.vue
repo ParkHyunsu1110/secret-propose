@@ -31,19 +31,20 @@
 
 <script setup>
 import { ref, nextTick, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import LetterContent from '@/components/LetterContent.vue'
 import RunawayButton from '@/components/RunawayButton.vue'
 import { useMusic } from '@/composables/useMusic.js'
 import { acceptPropose, recordVisit } from '@/api/index.js'
 
 const router = useRouter()
+const route = useRoute()
 const { play } = useMusic()
 const started = ref(false)
 const showLetter = ref(false)
 
 onMounted(() => {
-  recordVisit('event').catch(() => {})
+  recordVisit(route.meta.share ? 'event-share' : 'event').catch(() => {})
 })
 
 async function start() {
@@ -57,7 +58,7 @@ async function start() {
 
 function onYes() {
   acceptPropose().catch(() => {})
-  router.push('/celebration')
+  router.push(route.meta.share ? '/share/celebration' : '/celebration')
 }
 </script>
 
