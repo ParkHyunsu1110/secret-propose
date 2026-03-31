@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import IntroView from '@/views/IntroView.vue'
-import CardNewsView from '@/views/CardNewsView.vue'
-import EventView from '@/views/EventView.vue'
-import CelebrationView from '@/views/CelebrationView.vue'
+
+const IntroView = () => import('@/views/IntroView.vue')
+const CardNewsView = () => import('@/views/CardNewsView.vue')
+const EventView = () => import('@/views/EventView.vue')
+const CelebrationView = () => import('@/views/CelebrationView.vue')
 
 const routes = [
   {
