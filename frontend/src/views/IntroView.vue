@@ -56,7 +56,6 @@ async function preloadInitialCardImages() {
 
     for (const src of firstImages) {
       preloadImage(toWebp(src))
-      preloadImage(src)
     }
   } catch {
     // 폴백: json 실패 시 파일명 기준 선로딩 (share는 목록 앞 10개 id)
@@ -66,7 +65,6 @@ async function preloadInitialCardImages() {
     for (const id of ids) {
       const base = `/images/memory-${String(id).padStart(3, '0')}`
       preloadImage(`${base}.webp`)
-      preloadImage(`${base}.jpg`)
     }
   }
 }
