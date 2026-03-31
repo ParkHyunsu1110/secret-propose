@@ -124,34 +124,23 @@ watch(
   width: 100%;
   overflow: hidden;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: #e6e2d5;
   min-height: 120px;
 }
 
 .card-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
 }
 
 .card-image picture {
-  display: flex;
-  justify-content: center;
+  display: block;
   width: 100%;
 }
 
 .card-image-img {
-  max-width: 100%;
-  max-height: 70vh;
-  width: auto;
+  width: 100%;
   height: auto;
-  object-fit: contain;
   display: block;
-  vertical-align: bottom;
 }
 
 .card-image-placeholder {
