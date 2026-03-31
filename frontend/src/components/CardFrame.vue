@@ -11,6 +11,13 @@
           <path d="M15 18l-6-6 6-6"/>
         </svg>
       </button>
+      <img
+        v-if="currentImage"
+        class="card-image-blur"
+        :src="toWebp(currentImage)"
+        aria-hidden="true"
+        alt=""
+      >
       <div class="card-image">
         <picture v-if="currentImage">
           <source :srcset="toWebp(currentImage)" type="image/webp">
@@ -124,22 +131,41 @@ watch(
   width: 100%;
   overflow: hidden;
   position: relative;
-  background-color: #e6e2d5;
   min-height: 120px;
 }
 
+.card-image-blur {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(20px);
+  transform: scale(1.1);
+  z-index: 0;
+}
+
 .card-image {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
 }
 
 .card-image picture {
-  display: block;
+  display: flex;
+  justify-content: center;
   width: 100%;
 }
 
 .card-image-img {
-  width: 100%;
+  max-width: 100%;
+  max-height: 70vh;
+  width: auto;
   height: auto;
+  object-fit: contain;
   display: block;
 }
 
