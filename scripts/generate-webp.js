@@ -17,7 +17,7 @@ async function main() {
   for (const file of files) {
     const input = join(IMAGES_DIR, file)
     const output = join(IMAGES_DIR, `${basename(file, '.jpg')}.webp`)
-    await sharp(input).webp({ quality: 72 }).toFile(output)
+    await sharp(input).resize({ width: 520, withoutEnlargement: true }).webp({ quality: 60 }).toFile(output)
     converted += 1
   }
 
