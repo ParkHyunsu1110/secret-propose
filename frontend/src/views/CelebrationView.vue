@@ -19,14 +19,14 @@
       </transition>
 
       <transition name="fade-up-slow">
-        <p v-if="phase >= 4" class="date-text">2026.04.05</p>
+        <p v-if="phase >= 4" class="date-text">{{ todayText }}</p>
       </transition>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { recordVisit } from '@/api/index.js'
 
@@ -34,6 +34,9 @@ const route = useRoute()
 
 const canvasRef = ref(null)
 const phase = ref(0)
+
+const today = new Date()
+const todayText = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`
 
 let ctx = null
 let animationId = null
