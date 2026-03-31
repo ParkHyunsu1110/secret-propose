@@ -2,7 +2,7 @@ import { ref } from 'vue'
 
 const audio = new Audio('/music/bgm.mp3')
 audio.loop = true
-audio.preload = 'auto'
+audio.preload = 'metadata'
 
 const isPlaying = ref(false)
 let autoplayInitialized = false
