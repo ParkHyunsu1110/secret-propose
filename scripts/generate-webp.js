@@ -7,15 +7,16 @@ import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const IMAGES_DIR = join(__dirname, '..', 'frontend', 'public', 'images')
+const JPG_DIR = join(IMAGES_DIR, 'jpg')
 
 async function main() {
-  const files = readdirSync(IMAGES_DIR)
+  const files = readdirSync(JPG_DIR)
     .filter((f) => extname(f).toLowerCase() === '.jpg' && f.startsWith('memory-'))
     .sort()
 
   let converted = 0
   for (const file of files) {
-    const input = join(IMAGES_DIR, file)
+    const input = join(JPG_DIR, file)
     const output = join(IMAGES_DIR, `${basename(file, '.jpg')}.webp`)
     await sharp(input).resize({ width: 520, withoutEnlargement: true }).webp({ quality: 60 }).toFile(output)
     converted += 1

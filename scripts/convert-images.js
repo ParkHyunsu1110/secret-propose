@@ -17,7 +17,7 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const IMAGES_DIR = join(__dirname, '..', 'frontend', 'public', 'images')
+const IMAGES_DIR = join(__dirname, '..', 'frontend', 'public', 'images', 'jpg')
 
 const TO_CONVERT = ['.heic', '.HEIC', '.png', '.PNG']
 
